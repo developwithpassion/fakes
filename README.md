@@ -46,8 +46,9 @@ As you can see, this makes the process of creating a fake much simpler from a te
 
 ##Specifying the behaviour of a fake
 
-When scaffolding fake return values, the library behaves almost identically to the way RSpec stubs work. To setup a method to return a value for a particular set of arguments use the following syntax:
+When scaffolding fake return values, the library behaves almost identically to the way RSpec stubs work. 
 
+###Setup a method to return a value for a particular set of arguments
 ```ruby
 collaborator = fake
 
@@ -55,7 +56,6 @@ collaborator.stub(:name_of_method).with(arg1,arg2,arg3).and_return(return_value)
 ```
 
 ###Setup a method to return a value regardless of the arguments it is called with
-
 ```ruby
 collaborator = fake
 
