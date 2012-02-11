@@ -54,7 +54,7 @@ collaborator = fake
 collaborator.stub(:name_of_method).with(arg1,arg2,arg3).and_return(return_value)
 ```
 
-To setup a method to return a value regardless of the arguments it is called with:
+###Setup a method to return a value regardless of the arguments it is called with
 
 ```ruby
 collaborator = fake
@@ -66,17 +66,12 @@ collaborator.stub(:name_of_method).ignore_arg.and_return(return_value)
 collaborator.stub(:name_of_method).and_return(return_value)
 ```
 
-You can setup different return values for different argument sets as in the following example:
+###Setup different return values for different argument sets
 ```ruby
 collaborator = fake
 
-#setup a return value when the method is called with 1
 collaborator.stub(:method).with(1).and_return(first_return_value)
-
-#setup a different return value when the method is called with 2
 collaborator.stub(:method).with(2).and_return(second_return_value)
-
-#setup a return value when the method is called with anything other than 1 or 2
 collaborator.stub(:method).and_return(value_to_return_with_arguments_other_than_1_and_2)
 ```
 
