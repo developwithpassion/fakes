@@ -84,7 +84,7 @@ collaborator.stub(:method).and_return(value_to_return_with_arguments_other_than_
 
 ##Veryfying calls made to the fake
 
-The primary purpose of the library is to help you in doing interaction style testing in a AAA style. Again assume the following class is one you would like to test:
+The primary purpose of the library is to help you in doing interaction style testing in a AAA style. Assume the following class is one you would like to test:
 
 ```ruby
 class ItemToTest
@@ -119,15 +119,19 @@ describe ItemToTest do
 end
 ```
 From the example above, you can see that we created the fake and did not need to scaffold it with any behaviour. 
+
 ```ruby
 let(:collaborator){fake}
 ```
+
 You can also see that we are instantiation our System Under Test (sut) and providing it the collaborator:
+
 ```ruby
 let(:sut){ItemToTest.new(collaborator)}
 ```
 
 We then proceed to invoke the method on the component we are testing
+
 ```ruby
 before(:each) do
   sut.run
@@ -135,9 +139,11 @@ end
 ```
 
 Last but not least, we verify that our collaborator was invoked and with the right arguments:
+
 ```ruby
 it "should trigger its collaborator with the correct message" do
   collaborator.received(:send_message).called_with("Hello World").should_not be_nil
 end
 ```
+
 The nice thing is we can make the assertions after the fact, as opposed to needing to do them as part of setup, which I find is a much more natural way to read things, when you need to do this style of test.
