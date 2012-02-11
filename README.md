@@ -1,6 +1,6 @@
 #developwithpassion_fakes
 
-This is a really simple library to aid in AAA style testing. The primary driver for using this is to be able to make assertions on method calls to collaborators in actual assertions and not as part of setup.
+This is a really simple library to aid in AAA style testing. The primary driver for using this is to be able to make assertions on method calls to collaborators in actual assertions and not as part of setup. It is meant to be used to complement the current testing framework that you are using to aid in the creation of interaction based tests.
 
 Here is a simple example
 
@@ -32,7 +32,7 @@ end
 
 ##Creating a new fake
 
-To create a new fake, simple instantiate a class of DevelopWithPassion::Fakes::Fake. If you don't wish to keep typing that out, I would recommend creating a simple factory method in your test utility file. I typically use a file called spec_helper that is included in all of the test files. I will place the following code in spec_helper (sample) :
+To create a new fake, simply instantiate a class of DevelopWithPassion::Fakes::Fake. If you don't wish to keep typing that out, I would recommend creating a simple factory method in your test utility file. I typically use a file called spec_helper that is included in all of the test files. I will place the following code in spec_helper (sample) :
 
 ```ruby
 require 'rspec'
@@ -82,7 +82,7 @@ collaborator.stub(:method).with(2).and_return(second_return_value)
 collaborator.stub(:method).and_return(value_to_return_with_arguments_other_than_1_and_2)
 ```
 
-##Veryfying calls made to the fake
+##Verifying calls made to the fake
 
 
 ###Verifying when a call was made
@@ -162,7 +162,7 @@ module RSpec
 end
 ```
 
-Using the above utlity method turns the previous assertion:
+Using the above utility method turns the previous assertion:
 
 ```ruby
 collaborator.received(:send_message).called_with("Hello World").should_not be_nil
