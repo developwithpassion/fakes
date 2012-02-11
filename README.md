@@ -70,11 +70,10 @@ collaborator.stub(:name_of_method).and_return(return_value)
 ```ruby
 collaborator = fake
 
-####Setup a return value for 1
+#Setup a return value for 1
 collaborator.stub(:method).with(1).and_return(first_return_value)
-####Setup a return value for 2
+#Setup a return value for 2
 collaborator.stub(:method).with(2).and_return(second_return_value)
-####Setup a return value when called with everything else
+#Setup a return value when called with everything else (if you are going to use this, make sure it is used after setting up return values for specific arguments
 collaborator.stub(:method).and_return(value_to_return_with_arguments_other_than_1_and_2)
 ```
-If you are going to mix different arguments with different return values as well as have the "ignored" set returning a default, make sure the ignore arguments behaviour is specified last (as in the example above)
