@@ -24,9 +24,8 @@ describe SomeClass do
   end
 
   it "should trigger its collaborator with the correct message" do
-    collaborator.received("send_message").called_with("Hi").should be_true
+    collaborator.received("send_message").called_with("Hi").should_not be_nil
   end
  end
 end
-  
 ```
