@@ -175,3 +175,59 @@ collaborator.should have_received(:send_message,"Hello World")
 ```
 
 ###Verifying that a call should not have been made
+
+Currently verifying that a call was not made does not take the arguments into consideration. It just ensures that no calls to a particular named method were made. Here is an example:
+
+```ruby
+class FirstCollaborator
+  def send_message(message)
+  end
+end
+class SecondCollaborator
+  def send_message(message)
+  end
+end
+
+class SomeItem
+  def initialize
+    @first = FirstCollaborator.new
+    @second = SecondCollaborator.new
+  end
+
+  def first_behaviour
+    @first.send_message("Hello")
+  end
+
+  def second_behaviour
+    @second.send_message("World")
+  end
+end
+
+describe SomeItem do
+ context "when run" do
+  let(:first){fake}
+  let(:second){fake}
+
+  before(:each) do
+    FirstCollaborator.stub(:new).and_return(first)
+    SecondCollaborator.stub(:new).and_return(second)
+    @sut = SomeItem.new
+  end
+
+  before(:each) do
+    @sut.first_behaviour
+  end
+
+  it "should trigger its collaborator with the correct message" do
+    first.should have_received(:send_message,"Hello")
+  end
+
+  it "should not trigger its second collaborator" do
+    #again, here would be another option to use a convienience test utility method
+    second.never_received?(:send_message).should be_true
+  end
+ end
+end
+```
+
+As you can see, in this test we want to verify that one collaborator was triggered and the other not.
