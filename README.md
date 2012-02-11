@@ -84,6 +84,9 @@ collaborator.stub(:method).and_return(value_to_return_with_arguments_other_than_
 
 ##Veryfying calls made to the fake
 
+
+###Verifying when a call was made
+
 The primary purpose of the library is to help you in doing interaction style testing in a AAA style. Assume the following class is one you would like to test:
 
 ```ruby
@@ -124,7 +127,7 @@ From the example above, you can see that we created the fake and did not need to
 let(:collaborator){fake}
 ```
 
-You can also see that we are instantiation our System Under Test (sut) and providing it the collaborator:
+You can also see that we are create our System Under Test (sut) and provide it the collaborator:
 
 ```ruby
 let(:sut){ItemToTest.new(collaborator)}
@@ -146,4 +149,29 @@ it "should trigger its collaborator with the correct message" do
 end
 ```
 
-The nice thing is we can make the assertions after the fact, as opposed to needing to do them as part of setup, which I find is a much more natural way to read things, when you need to do this style of test.
+The nice thing is we can make the assertions after the fact, as opposed to needing to do them as part of setup, which I find is a much more natural way to read things, when you need to do this style of test. Notice that the called_with method return a method_invocation that will be nil if the call was not received. My recommendation would be to create a test utility method that allows you to leverage your testing frameworks assertion library to make the above assertion more terse. The
+following rspec sample demonstrates:
+
+```ruby
+module RSpec
+  Matchers.define :have_received do|symbol,*args|
+    match do|fake|
+      fake.received(symbol).called_with(*args) != nil
+    end
+  end
+end
+```
+
+Using the above utlity method turns the previous assertion:
+
+```ruby
+collaborator.received(:send_message).called_with("Hello World").should_not be_nil
+```
+
+To this:
+
+```ruby
+collaborator.should have_received(:send_message,"Hello World")
+```
+
+###Verifying that a call should not have been made
