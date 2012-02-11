@@ -4,9 +4,29 @@ This is a really simple library to aid in AAA style testing. The primary driver 
 
 Here is a simple example
 
-{% highlight ruby %}
+```ruby
+class SomeClass
+  def initialize(collaborator)
+    @collaborator = collaborator
+  end
+  def run()
+    @collaborator.send_message("Hi")
+  end
+end
+
 describe SomeClass do
+ context "when run" do
+  let(:collaborator){DevelopWithPassion::Fakes::Fake.new}
+  let(:sut){SomeClass.new(collaborator)}
+
+  before(:each) do
+    sut.run
+  end
+
+  it "should trigger its collaborator with the correct message" do
+    collaborator.received("send_message").called_with("Hi").should be_true
+  end
+ end
 end
   
-{% endhighlight %}
-
+```
