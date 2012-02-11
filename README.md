@@ -24,7 +24,7 @@ describe SomeClass do
   end
 
   it "should trigger its collaborator with the correct message" do
-    collaborator.received("send_message").called_with("Hi").should_not be_nil
+    collaborator.received(:send_message).called_with("Hi").should_not be_nil
   end
  end
 end
@@ -46,4 +46,37 @@ As you can see, this makes the process of creating a fake much simpler from a te
 
 ##Specifying the behaviour of a fake
 
+When scaffolding fake return values, the library behaves almost identically to the way RSpec stubs work. To setup a method to return a value for a particular set of arguments use the following syntax:
+
+```ruby
+collaborator = fake
+
+collaborator.stub(:name_of_method).with(arg1,arg2,arg3).and_return(return_value)
+```
+
+To setup a method to return a value regardless of the arguments it is called with:
+
+```ruby
+collaborator = fake
+
+#long handed way
+collaborator.stub(:name_of_method).ignore_arg.and_return(return_value)
+
+#preferred way
+collaborator.stub(:name_of_method).and_return(return_value)
+```
+
+You can setup different return values for different argument sets as in the following example:
+```ruby
+collaborator = fake
+
+#setup a return value when the method is called with 1
+collaborator.stub(:method).with(1).and_return(first_return_value)
+
+#setup a different return value when the method is called with 2
+collaborator.stub(:method).with(2).and_return(second_return_value)
+
+#setup a return value when the method is called with anything other than 1 or 2
+collaborator.stub(:method).and_return(value_to_return_with_arguments_other_than_1_and_2)
+```
 
