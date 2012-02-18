@@ -32,17 +32,13 @@ end
 
 ##Creating a new fake
 
-To create a new fake, simply instantiate a class of DevelopWithPassion::Fakes::Fake. If you don't wish to keep typing that out, I would recommend creating a simple factory method in your test utility file. I typically use a file called spec_helper that is included in all of the test files. I will place the following code in spec_helper (sample) :
+To create a new fake, simply leverage the fake method that is mixed into the Kernel module.
 
 ```ruby
-require 'rspec'
 require 'developwithpassion_fakes'
 
-def fake
-  return DevelopWithPassion::Fakes::Fake.new
-end
+item = fake
 ```
-As you can see, this makes the process of creating a fake much simpler from a test.
 
 ##Specifying the behaviour of a fake
 
