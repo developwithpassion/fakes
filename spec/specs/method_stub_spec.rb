@@ -55,7 +55,7 @@ module DevelopWithPassion
         end
         context "and it has the specified argument set" do
           let(:arguments){[1]}
-          let(:arg_set){DummyArgSet.new(2)}
+          let(:arg_set){DummyArgSet.new}
           before (:each) do
             arg_sets.push(arg_set)
             arg_set.stub(:matches?).and_return(true)
@@ -74,7 +74,7 @@ module DevelopWithPassion
         end
         context "and it does not have the specified argument set" do
           let(:arguments){[1]}
-          let(:arg_set){DummyArgSet.new(2)}
+          let(:arg_set){DummyArgSet.new}
           before (:each) do
             sut.stub(:ignore_arg).and_return(arg_set)
             arg_set.stub(:return_value).and_return(2)
@@ -105,7 +105,7 @@ module DevelopWithPassion
         let(:arguments){[1]}
 
         context "and one of its argument sets was called with the set of arguments" do
-          let(:arg_set){DummyArgSet.new(2)}
+          let(:arg_set){DummyArgSet.new}
           before (:each) do
             arg_sets.push(arg_set)
             arg_set.stub(:was_called_with?).with(arguments).and_return(true)
@@ -132,8 +132,8 @@ module DevelopWithPassion
       context "when verifying whether it was called a certain number of times" do
         let(:arg_sets){[]}
         let(:sut){MethodStub.new(arg_sets)}
-        let(:arg_set){DummyArgSet.new(2)}
-        let(:arg_set_2){DummyArgSet.new(2)}
+        let(:arg_set){DummyArgSet.new}
+        let(:arg_set_2){DummyArgSet.new}
 
         before (:each) do
           arg_sets.push(arg_set)
