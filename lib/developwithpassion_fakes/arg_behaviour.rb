@@ -13,8 +13,6 @@ module DevelopWithPassion
       end
 
       def matches?(args)
-        puts @args.class
-        puts args[0].class
         return @args == args
       end
 

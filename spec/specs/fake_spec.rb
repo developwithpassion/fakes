@@ -178,6 +178,13 @@ module DevelopWithPassion
             fake.received(:hello).called_with("World").should be_true
           end
 
+          it "should be able to intercept on methods that have no arguments" do
+            fake = Fake.new
+            fake.hello
+            fake.received(:hello).should_not be_nil
+          end
+          
+
           it "should be able to intercept on methods that take a hash" do
             fake = Fake.new
             fake.hello(:id => "JP",:age => 33)
