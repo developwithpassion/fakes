@@ -11,7 +11,7 @@ module DevelopWithPassion
         let(:sut){MethodStub.new(arg_sets)}
 
         before (:each) do
-          ArgSet.stub(:new).with(args).and_return(argument_set)
+          ArgSet.stub(:new).with([args]).and_return(argument_set)
         end
         before (:each) do
           @result = sut.with(args)
@@ -102,13 +102,13 @@ module DevelopWithPassion
             @args = *args
           end
         end
-        let(:arguments){[1]}
+        let(:arguments){1}
 
         context "and one of its argument sets was called with the set of arguments" do
           let(:arg_set){DummyArgSet.new}
           before (:each) do
             arg_sets.push(arg_set)
-            arg_set.stub(:was_called_with?).with(arguments).and_return(true)
+            arg_set.stub(:was_called_with?).with([arguments]).and_return(true)
           end
           before (:each) do
             @result = sut.called_with(arguments)

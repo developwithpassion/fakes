@@ -13,8 +13,8 @@ module DevelopWithPassion
 
       context "when matching an argument set" do
         it "should match any argument set" do
-          sut.matches?(1,2,3,4).should be_true
-          sut.matches?(3,"hello",4,5).should be_true
+          sut.matches?([1,2,3,4]).should be_true
+          sut.matches?([3,"hello",4,5]).should be_true
         end
       end
 

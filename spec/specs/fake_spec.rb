@@ -104,7 +104,7 @@ module DevelopWithPassion
             @result = sut.hello(args)
           end
           it "should trigger the invocation with the arguments" do
-            invocation.args.should == args
+            invocation.args.should == [args]
           end
           it "should return the result of triggering the invocation" do
             @result.should == invocation.return_value
@@ -126,14 +126,89 @@ module DevelopWithPassion
           end
 
           it "should invoke the invocation with the arguments" do
-            invocation.args.should == args 
+            invocation.args.should == [args]
           end
 
           it "should return the result of triggering the new invocation" do
             @result.should == invocation.return_value
           end
         end
+      end
 
+      context "scenarios" do
+        context "setting up return values" do
+          it "should be able to intercept on methods that take a singular value" do
+            fake = Fake.new
+            fake.stub(:hello).with("World").and_return("Hello World") 
+            fake.hello("World").should == "Hello World"
+          end
+
+          it "should be able to intercept on methods that take a hash" do
+            fake = Fake.new
+            fake.stub(:hello).with(:id => "JP",:age => 33).and_return("Hello World") 
+            fake.hello(:id => "JP",:age => 33).should == "Hello World"
+          end
+
+          it "should be able to intercept on methods that take a value and a hash" do
+            fake = Fake.new
+            fake.stub(:hello).with(1,:id => "JP",:age => 33).and_return("Hello World") 
+
+            fake.hello(1,:id => "JP",:age => 33).should == "Hello World"
+            fake.hello(2,:id => "JP",:age => 33).should be_nil
+          end
+
+          it "should be able to intercept on methods that take an array" do
+            fake = Fake.new
+            fake.stub(:hello).with([1,2,3,4]).and_return("Hello World") 
+
+            fake.hello([1,2,3,4]).should == "Hello World"
+          end
+
+          it "should be able to intercept on methods that take an value, and an array" do
+            fake = Fake.new
+            fake.stub(:hello).with(1,[1,2,3,4]).and_return("Hello World") 
+
+            fake.hello(1,[1,2,3,4]).should == "Hello World"
+          end
+        end
+        context "verifying calls were made" do
+          it "should be able to intercept on methods that take a singular value" do
+            fake = Fake.new
+            fake.hello("World")
+            fake.received(:hello).called_with("World").should be_true
+          end
+
+          it "should be able to intercept on methods that take a hash" do
+            fake = Fake.new
+            fake.hello(:id => "JP",:age => 33)
+            fake.received(:hello).called_with(:id => "JP",:age => 33).should_not be_nil
+            fake.received(:hello).called_with(:id => "JS",:age => 33).should be_nil
+          end
+
+          it "should be able to intercept on methods that take a value and a hash" do
+            fake = Fake.new
+
+            fake.hello(1,:id => "JP",:age => 33)
+            fake.received(:hello).called_with(1,:id => "JP",:age => 33).should_not be_nil
+            fake.received(:hello).called_with(1,:id => "JS",:age => 33).should be_nil
+          end
+
+          it "should be able to intercept on methods that take an array" do
+            fake = Fake.new
+
+            fake.hello([1,2,3,4])
+            fake.received(:hello).called_with([1,2,3,4]).should_not be_nil
+            fake.received(:hello).called_with([1,2,3,5]).should be_nil
+          end
+
+          it "should be able to intercept on methods that take an value, and an array" do
+            fake = Fake.new
+            fake.hello(1,[1,2,3,4])
+
+            fake.received(:hello).called_with(1,[1,2,3,4]).should_not be_nil
+            fake.received(:hello).called_with(1,[1,2,3,5]).should be_nil
+          end
+        end
       end
     end
   end

@@ -7,16 +7,18 @@ module DevelopWithPassion
         @return_value = item
       end
 
-      def capture_args(*args)
+      def capture_args(args)
         @times_called += 1
-        @called_args = *args
+        @called_args = args
       end
 
-      def matches?(*args)
+      def matches?(args)
+        puts @args.class
+        puts args[0].class
         return @args == args
       end
 
-      def was_called_with?(*args)
+      def was_called_with?(args)
         return @called_args == args
       end
     end

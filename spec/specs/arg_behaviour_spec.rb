@@ -31,13 +31,13 @@ module DevelopWithPassion
           sut.times_called.should == 1
         end
         it "should store the arguments it was called with" do
-          sut.called_args.should == [2]
+          sut.called_args.should == 2
         end
       end
 
       context "when matching a set of arguments" do
         before (:each) do
-          sut.args = [2]
+          sut.args = 2
         end
         it "should match if its own set of arguments are the same" do
           sut.matches?(2).should be_true
@@ -45,9 +45,18 @@ module DevelopWithPassion
         end
       end
 
+      context "when matching a set of arguments that is passed in as a dictionary" do
+        before (:each) do
+          sut.args = {:id => 0,:name => "JP"}
+        end
+        it "should match if its hash is the same" do
+          sut.matches?(:id => 0,:name => "JP").should be_true
+        end
+      end
+
       context "when determining whether it was called with a set of arguments" do
         before (:each) do
-          sut.called_args = [2]
+          sut.called_args = 2
         end
 
         it "should match if the arguments are the same as the arguments it was invoked with" do

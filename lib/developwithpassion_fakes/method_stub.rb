@@ -6,7 +6,7 @@ module DevelopWithPassion
       end
 
       def with(*args)
-        return add_new_set(ArgSet.new(*args))
+        return add_new_set(ArgSet.new(args))
       end
 
       def add_new_set(set)
@@ -23,14 +23,14 @@ module DevelopWithPassion
       end
 
 
-      def invoke(*args)
-        set = @arg_sets.find{|item| item.matches?(*args)} || ignore_arg
-        set.capture_args(*args)
+      def invoke(args)
+        set = @arg_sets.find{|item| item.matches?(args)} || ignore_arg
+        set.capture_args(args)
         return set.return_value
       end
 
       def called_with(*args)
-        return @arg_sets.find{|item| item.was_called_with?(*args)}
+        return @arg_sets.find{|item| item.was_called_with?(args)}
       end
 
       def times?(value)
