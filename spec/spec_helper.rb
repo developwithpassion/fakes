@@ -1,4 +1,3 @@
-require 'rspec'
 
 Dir.chdir(File.join(File.dirname(__FILE__),"..,lib".split(','))) do
   Dir.glob("**/*.rb").each do |file| 
