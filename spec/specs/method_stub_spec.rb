@@ -129,6 +129,23 @@ module DevelopWithPassion
 
       end
 
+      context "when retrieving the total number of times called" do
+        let(:arg_sets){[]}
+        let(:sut){MethodStub.new(arg_sets)}
+        let(:arg_set){DummyArgSet.new}
+        let(:arg_set_2){DummyArgSet.new}
+
+        before (:each) do
+          arg_sets.push(arg_set)
+          arg_sets.push(arg_set_2)
+          arg_set.stub(:times_called).and_return(2)
+          arg_set_2.stub(:times_called).and_return(3)
+        end
+
+        it "it should return the sum of the invocations of its argument sets" do
+          sut.total_times_called.should == 5
+        end
+      end
       context "when verifying whether it was called a certain number of times" do
         let(:arg_sets){[]}
         let(:sut){MethodStub.new(arg_sets)}
