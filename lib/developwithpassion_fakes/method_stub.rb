@@ -33,9 +33,12 @@ module DevelopWithPassion
         return @arg_sets.find{|item| item.was_called_with?(args)}
       end
 
+      def total_times_called
+        return @arg_sets.inject(0){|sum,item|sum += item.times_called}
+      end
+
       def times?(value)
-        total = @arg_sets.inject(0){|sum,item|sum += item.times_called}
-        return total == value
+        return total_times_called == value
       end
     end
   end
