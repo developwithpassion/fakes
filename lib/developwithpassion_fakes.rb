@@ -1,3 +1,4 @@
+require 'developwithpassion_arrays'
 require 'developwithpassion_fakes/arg_behaviour'
 require 'developwithpassion_fakes/arg_set'
 require 'developwithpassion_fakes/fake'
