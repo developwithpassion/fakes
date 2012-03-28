@@ -1,4 +1,4 @@
-#developwithpassion_fakes
+#fakes
 
 This is a really simple library to aid in AAA style testing. The primary driver for using this is to be able to make assertions on method calls to collaborators in actual assertions and not as part of setup. It is meant to be used to complement the current testing framework that you are using to aid in the creation of interaction based tests.
 
@@ -16,7 +16,7 @@ end
 
 describe SomeClass do
  context "when run" do
-  let(:collaborator){DevelopWithPassion::Fakes::Fake.new}
+  let(:collaborator){fake}
   let(:sut){SomeClass.new(collaborator)}
 
   before(:each) do
@@ -35,7 +35,7 @@ end
 To create a new fake, simply leverage the fake method that is mixed into the Kernel module.
 
 ```ruby
-require 'developwithpassion_fakes'
+require 'fakes'
 
 item = fake
 ```
