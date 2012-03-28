@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib",__FILE__)
-require "developwithpassion_fakes/version"
+require "fakes/version"
 
 Gem::Specification.new do |s|
-  s.name        = "developwithpassion_fakes"
-  s.version     = DevelopWithPassion::Fakes::VERSION
+  s.name        = "fakes"
+  s.version     = Fakes::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Develop With Passion®"]
   s.email       = ["open_source@developwithpassion.com"]
