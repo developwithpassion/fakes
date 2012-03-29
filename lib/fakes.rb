@@ -1,4 +1,5 @@
-require 'developwithpassion_arrays'
+require 'arrayfu'
+
 require 'fakes/arg_behaviour'
 require 'fakes/arg_set'
 require 'fakes/fake'
