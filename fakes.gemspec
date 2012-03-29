@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib",__FILE__)
-require "fakes/version"
+require "core/version"
 
 Gem::Specification.new do |s|
   s.name        = "fakes"
@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"
-  s.add_runtime_dependency "developwithpassion_arrays"
+  s.add_runtime_dependency "arrayfu"
 end

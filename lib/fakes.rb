@@ -1,9 +1,10 @@
-require 'developwithpassion_arrays'
-require 'fakes/arg_behaviour'
-require 'fakes/arg_set'
-require 'fakes/fake'
-require 'fakes/ignore_set'
-require 'fakes/method_stub'
+require 'arrayfu'
+
+require 'core/arg_behaviour'
+require 'core/arg_set'
+require 'core/fake'
+require 'core/ignore_set'
+require 'core/method_stub'
 
 module Kernel
   def fake
