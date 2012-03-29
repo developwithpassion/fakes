@@ -1,4 +1,4 @@
-require 'arrayfu'
+require 'developwithpassion_arrays'
 
 require 'core/arg_behaviour'
 require 'core/arg_set'

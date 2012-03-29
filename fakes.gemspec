@@ -17,10 +17,9 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
-  # specify any dependencies here; for example:
   s.add_development_dependency "rspec"
   s.add_development_dependency "rake"
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"
-  s.add_runtime_dependency "arrayfu"
+  s.add_runtime_dependency "developwithpassion_arrays"
 end
