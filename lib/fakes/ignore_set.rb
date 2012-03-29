@@ -1,16 +1,15 @@
 module Fakes
   class IgnoreSet
     include ArgBehaviour
-    attr_accessor :arg_sets
 
     def initialize
-      @arg_sets = []
+      array :arg_sets do|a|
+        a.mutator :capture_args do|args|
+          @times_called += 1
+          @arg_sets << args
+        end
+      end
       @times_called = 0
-    end
-
-    def capture_args(args)
-      @times_called += 1
-      @arg_sets << args
     end
 
     def matches?(args)

@@ -133,13 +133,6 @@ module Fakes
         end
       end
     end
-    context "when asked if it responds to a method" do
-      subject{Fake.new({})}
-
-      it "should always return true" do
-        subject.respond_to?(:item).should be_true
-      end
-    end
 
     context "scenarios" do
       context "setting up return values" do
