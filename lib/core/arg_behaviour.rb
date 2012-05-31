@@ -6,6 +6,10 @@ module Fakes
       @return_value = item
     end
 
+    def throws(exception)
+      @exception = exception
+    end
+
     def capture_args(args)
       @times_called += 1
       @called_args = args
@@ -17,6 +21,13 @@ module Fakes
 
     def was_called_with?(args)
       return @called_args == args
+    end
+
+    def process
+      return @return_value unless @exception
+      if @exception
+        raise @exception
+      end
     end
   end
 end

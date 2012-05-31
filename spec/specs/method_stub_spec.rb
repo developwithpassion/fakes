@@ -42,6 +42,34 @@ module Fakes
       end
     end
 
+    context "when specified to throw an exception" do
+      let(:ignored_set){DummyArgSet.new}
+      let(:exception){Object.new}
+      let(:arg_sets){[]}
+      let(:sut){MethodStub.new(arg_sets)}
+
+      class DummyArgSet
+        attr_accessor :exception
+
+        def throws(exception)
+          @exception = exception
+        end
+      end
+
+      before (:each) do
+        IgnoreSet.stub(:new).and_return(ignored_set)
+      end
+
+      before (:each) do
+        sut.throws(exception)
+      end
+      it "should add the ignored set to the set of args sets" do
+        arg_sets[0].should == ignored_set
+      end
+      it "should have stored the exception on the new argument set" do
+        ignored_set.exception.should == exception
+      end
+    end
     context "when invoked with a set of arguments" do
       let(:arg_sets){[]}
       let(:sut){MethodStub.new(arg_sets)}
@@ -58,7 +86,7 @@ module Fakes
         before (:each) do
           arg_sets.push(arg_set)
           arg_set.stub(:matches?).and_return(true)
-          arg_set.stub(:return_value).and_return(2)
+          arg_set.stub(:process).and_return(2)
         end
         before (:each) do
           @result = sut.invoke(arguments)
@@ -76,7 +104,7 @@ module Fakes
         let(:arg_set){DummyArgSet.new}
         before (:each) do
           sut.stub(:ignore_arg).and_return(arg_set)
-          arg_set.stub(:return_value).and_return(2)
+          arg_set.stub(:process).and_return(2)
         end
         before (:each) do
           @result = sut.invoke(arguments)

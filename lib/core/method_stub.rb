@@ -14,6 +14,9 @@ module Fakes
       return add_new_set(ArgSet.new(args))
     end
 
+    def throws(exception)
+      ignore_arg.throws(exception)
+    end
 
     def ignore_arg
       return add_new_set(IgnoreSet.new)
@@ -27,7 +30,7 @@ module Fakes
     def invoke(args)
       set = @arg_sets.find{|item| item.matches?(args)} || ignore_arg
       set.capture_args(args)
-      return set.return_value
+      return set.process
     end
 
     def called_with(*args)

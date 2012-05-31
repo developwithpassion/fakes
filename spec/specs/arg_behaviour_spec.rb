@@ -13,12 +13,27 @@ module Fakes
     before (:each) do
       sut.send(:extend,ArgBehaviour)
     end
-    context "when a return value is specified" do
-      before (:each) do
-        sut.and_return(2)
+    context "when continuing its execution" do
+      context "and no exception has been specified to be thrown" do
+        before (:each) do
+          sut.and_return(2)
+        end
+        it "should store the return value to be returned during invocation" do
+          sut.process().should == 2
+        end
       end
-      it "should store the return value to be returned during invocation" do
-        sut.return_value.should == 2
+      context "and an exception has been specified to be thrown" do
+        let(:exception){Exception.new}
+        before (:each) do
+          sut.throws(exception)
+        end
+        it "should throw the exception" do
+          begin
+            sut.process()
+          rescue Exception => e
+            e.should == exception
+          end
+        end
       end
     end
 
