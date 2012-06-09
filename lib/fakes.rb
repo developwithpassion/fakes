@@ -17,3 +17,8 @@ module Kernel
     return Fakes::Fake.new
   end
 end
+class Object
+  def matches
+    return Fakes::Matches
+  end
+end
