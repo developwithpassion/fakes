@@ -48,34 +48,36 @@ module Fakes
         sut.called_args.should == 2
       end
     end
-
+    
     context "when matching a set of arguments" do
+      let(:matcher){Object.new}
       before (:each) do
-        sut.args = 2
+        sut.arg_matcher = matcher
+
+        matcher.stub(:matches?).with(2).and_return(true)
+        matcher.stub(:matches?).with(3).and_return(false)
       end
-      it "should match if its own set of arguments are the same" do
+      it "should match if its argument matcher matches the argument set" do
         sut.matches?(2).should be_true
         sut.matches?(3).should be_false
       end
     end
 
-    context "when matching a set of arguments that is passed in as a dictionary" do
-      before (:each) do
-        sut.args = {:id => 0,:name => "JP"}
-      end
-      it "should match if its hash is the same" do
-        sut.matches?(:id => 0,:name => "JP").should be_true
-      end
-    end
 
     context "when determining whether it was called with a set of arguments" do
+      let(:the_matcher){Object.new}
+
+      before (:each) do
+        ArgMatchFactory.stub(:create_arg_matcher_using).with(2).and_return(the_matcher)
+        the_matcher.stub(:matches?).with(2).and_return(true)
+      end
+      
       before (:each) do
         sut.called_args = 2
       end
 
-      it "should match if the arguments are the same as the arguments it was invoked with" do
+      it "should make the decision by using the matcher created to match the arguments" do
         sut.was_called_with?(2).should be_true
-        sut.was_called_with?(3).should be_false
       end
     end
   end

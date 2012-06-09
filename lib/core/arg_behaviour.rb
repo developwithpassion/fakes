@@ -1,6 +1,10 @@
 module Fakes
   module ArgBehaviour
-    attr_accessor :return_value,:times_called
+    attr_accessor :return_value,:times_called,:arg_matcher
+
+    def initialize_matcher_using(args)
+      @arg_matcher = ArgMatchFactory.create_arg_matcher_using(args)
+    end
 
     def and_return(item)
       @return_value = item
@@ -16,11 +20,11 @@ module Fakes
     end
 
     def matches?(args)
-      return @args == args
+      return @arg_matcher.matches?(args)
     end
 
     def was_called_with?(args)
-      return @called_args == args
+      ArgMatchFactory.create_arg_matcher_using(args).matches?(@called_args)
     end
 
     def process

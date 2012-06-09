@@ -16,9 +16,9 @@ module Fakes
       return true
     end
 
-
     def was_called_with?(args)
-      return @arg_sets.select{|set| set == args}.count > 0
+      matcher = ArgMatchFactory.create_arg_matcher_using(args)
+      return @arg_sets.select{|set| matcher.matches?(set)}.count > 0
     end
   end
 end
