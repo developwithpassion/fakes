@@ -1,6 +1,5 @@
 module Fakes
   class BlockArgMatcher
-    include ArgMatchProtocol
 
     def initialize(specification_block)
       @specification_block = specification_block

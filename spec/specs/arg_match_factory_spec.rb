@@ -18,7 +18,7 @@ module Fakes
       context "and the arguments are matchers themselves" do
         let(:matcher){Object.new}
         before (:each) do
-          matcher.stub(:respond_to?).with(:is_used_in_the_arg_matching_process?).and_return(true)
+          matcher.stub(:respond_to?).with(:matches?).and_return(true)
         end
         
         before (:each) do

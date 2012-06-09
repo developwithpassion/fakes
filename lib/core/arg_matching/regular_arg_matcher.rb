@@ -1,6 +1,5 @@
 module Fakes
   class RegularArgMatcher
-    include ArgMatchProtocol
 
     def initialize(value_to_match)
       @value_to_match = value_to_match

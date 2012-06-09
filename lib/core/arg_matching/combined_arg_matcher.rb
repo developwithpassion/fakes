@@ -1,6 +1,5 @@
 module Fakes
   class CombinedArgMatcher
-    include ArgMatchProtocol
     attr_reader :all_matchers
 
     def initialize(options = {})
