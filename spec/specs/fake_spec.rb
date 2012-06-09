@@ -214,6 +214,7 @@ module Fakes
           fake.received(:hello).called_with(1,[1,2,3,4]).should_not be_nil
           fake.received(:hello).called_with(1,[1,2,3,5]).should be_nil
         end
+
       end
     end
   end

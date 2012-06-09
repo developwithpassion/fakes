@@ -15,6 +15,21 @@ module Fakes
           end
         end
       end
+      context "and the arguments are matchers themselves" do
+        let(:matcher){Object.new}
+        before (:each) do
+          matcher.stub(:respond_to?).with(:is_used_in_the_arg_matching_process?).and_return(true)
+        end
+        
+        before (:each) do
+          @result = ArgMatchFactory.create_arg_matcher_using([matcher])
+        end
+        
+        it "should create a combined matcher that only using the matchers provided" do
+          @result.all_matchers.count.should == 1
+          @result.all_matchers[0].should == matcher
+        end
+      end
     end
   end
 end
