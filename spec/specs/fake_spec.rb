@@ -135,6 +135,22 @@ module Fakes
     end
 
     context "scenarios" do
+      context "setting up return values using argument matchers" do
+        it "should be able to intercept on methods using the matches factory" do
+          fake = Fake.new
+
+          fake.stub(:hello).with(Matches.regex(/W/)).and_return("Hello World") 
+          fake.hello("World").should == "Hello World"
+        end
+        it "should be able to intercept on methods using combinations of explicit values and matchers" do
+          fake = Fake.new
+
+          fake.stub(:hello).with(Matches.regex(/W/),Matches.greater_than(3),10).and_return("Hello World") 
+
+          fake.hello("World",4,10).should == "Hello World"
+          fake.hello("World",2,10).should == nil
+        end
+      end
       context "setting up return values" do
         it "should be able to intercept on methods that take a singular value" do
           fake = Fake.new
