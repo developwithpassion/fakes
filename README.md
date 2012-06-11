@@ -72,10 +72,16 @@ collaborator.stub(:method).with(1).and_return(first_return_value)
 #Setup a return value for 2
 collaborator.stub(:method).with(2).and_return(second_return_value)
 
+
 #Setup a return value when called with everything else 
 #if you are going to use this, make sure it is used after 
 #setting up return values for specific arguments
 collaborator.stub(:method).and_return(value_to_return_with_arguments_other_than_1_and_2)
+
+
+#Setup a return value for any number greater than 2 - this makes use of the argument matching syntax described [here](http://blog.developwithpassion.com/2012/06/09/fakes-and-in-turn-fakes-rspec-new-feature-arbitrary-argument-matching-for-setup-and-verification-of-calls/)
+
+collaborator.stub(:method).with(arg_match.greater_than(2)).and_return(second_return_value)
 ```
 
 ##Verifying calls made to the fake
@@ -145,26 +151,14 @@ it "should trigger its collaborator with the correct message" do
 end
 ```
 
-The nice thing is we can make the assertions after the fact, as opposed to needing to do them as part of setup, which I find is a much more natural way to read things, when you need to do this style of test. Notice that the called_with method return a method_invocation that will be nil if the call was not received. My recommendation would be to create a test utility method that allows you to leverage your testing frameworks assertion library to make the above assertion more terse. The
-following rspec sample demonstrates:
+The nice thing is we can make the assertions after the fact, as opposed to needing to do them as part of setup, which I find is a much more natural way to read things, when you need to do this style of test. Notice that the called_with method return a method_invocation that will be nil if the call was not received. My recommendation would be to use the [fakes-rspec](http://github.com/developwithpassion/fakes-rpsec) library (if you are using rspec) which gives you access to a predefined matcher that you can use as follows:
 
-```ruby
-module RSpec
-  Matchers.define :have_received do|symbol,*args|
-    match do|fake|
-      fake.received(symbol).called_with(*args) != nil
-    end
-  end
-end
-```
-
-Using the above utility method turns the previous assertion:
 
 ```ruby
 collaborator.received(:send_message).called_with("Hello World").should_not be_nil
 ```
 
-To this:
+Can be done in fakes-rspec by doing this:
 
 ```ruby
 collaborator.should have_received(:send_message,"Hello World")
@@ -172,7 +166,7 @@ collaborator.should have_received(:send_message,"Hello World")
 
 ###Verifying that a call should not have been made
 
-Currently verifying that a call was not made does not take the arguments into consideration. It just ensures that no calls to a particular named method were made. Here is an example:
+Verifying that a call was not made can be done with or without arguments:
 
 ```ruby
 class FirstCollaborator
@@ -221,9 +215,11 @@ describe SomeItem do
   it "should not trigger its second collaborator" do
     #again, here would be another option to use a convienience test utility method
     second.never_received?(:send_message).should be_true
+    #with fakes-rspec it looks like this
+    second.should_not have_received(:send_message)
   end
  end
 end
 ```
 
-As you can see, in this test we want to verify that one collaborator was triggered and the other not.
+As you can see, in this test we want to verify that one collaborator was triggered and the other not. If you cared about specifying arguments it should not have been called with, you can do the same as a regular verification.

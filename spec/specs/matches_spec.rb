@@ -34,7 +34,7 @@ module Fakes
       end
 
       it "should be able to create a lambda based matcher" do
-        match = Matches.condition(lambda{|item| item > 3})
+        match = Matches.condition{|item| item > 3}
         match.matches?(2).should be_false
         match.matches?(7).should be_true
       end

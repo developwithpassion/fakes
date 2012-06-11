@@ -2,31 +2,31 @@ module Fakes
   class Matches
     class << self
       def not_nil
-        condition(lambda{|item| item != nil})
+        condition{|item| item != nil}
       end
 
       def nil
-        condition(lambda{|item| item == nil})
+        condition{|item| item == nil}
       end
 
       def any
-        condition(lambda{|ignored| true})
+        condition{|ignored| true}
       end
 
       def greater_than(value)
-        condition(lambda{|number| number > value})
+        condition{|number| number > value}
       end
       
 
       def in_range(range)
-        condition(lambda{|item| range === item})
+        condition{|item| range === item}
       end
 
       def regex(regex)
-        condition(lambda{|string| regex =~ string})
+        condition{|string| regex =~ string}
       end
 
-      def condition(conditional_block)
+      def condition(&conditional_block)
         return BlockArgMatcher.new(conditional_block)
       end
     end

@@ -39,7 +39,7 @@ module Fakes
 
       fake.hello(7)
 
-      fake.received(:hello).called_with(Matches.condition(lambda{|item| item < 10})).should_not be_nil
+      fake.received(:hello).called_with(Matches.condition{|item| item < 10}).should_not be_nil
     end
 
     it "should be able to intercept by mixing regular arguments with matchers" do
