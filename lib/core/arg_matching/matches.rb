@@ -1,6 +1,14 @@
 module Fakes
   class Matches
     class << self
+      def not_nil
+        condition(lambda{|item| item != nil})
+      end
+
+      def nil
+        condition(lambda{|item| item == nil})
+      end
+
       def any
         condition(lambda{|ignored| true})
       end

@@ -23,7 +23,10 @@ class Object
   end
   def fake_class(klass)
     item = fake
-    Fakes::ClassSwaps.instance.add_fake_for(klass.to_s.to_sym,item)
+    Fakes::ClassSwaps.instance.add_fake_for(klass,item)
     item
+  end
+  def reset_fake_classes
+    Fakes::ClassSwaps.instance.reset
   end
 end

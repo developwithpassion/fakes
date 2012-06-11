@@ -6,7 +6,7 @@ module Fakes
     attr_reader :swaps
 
     def initialize
-      @swaps ={}
+      @swaps = {}
     end
 
     def add_fake_for(klass,the_fake)

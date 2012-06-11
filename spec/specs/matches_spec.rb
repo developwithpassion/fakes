@@ -17,6 +17,16 @@ module Fakes
         match.matches?(10).should be_true
         match.matches?(11).should be_false
       end
+      it "should be able to create a nil matcher" do
+        match = Matches.nil
+        match.matches?(nil).should be_true
+        match.matches?(10).should be_false
+      end
+      it "should be able to create a not nil matcher" do
+        match = Matches.not_nil
+        match.matches?(10).should be_true
+        match.matches?(nil).should be_false
+      end
       it "should be able to create a regex string matcher" do
         match = Matches.regex(/a|e|i|o|u/)
         match.matches?("awwef").should be_true
