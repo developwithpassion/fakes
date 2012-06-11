@@ -18,7 +18,7 @@ class Object
   def fake
     return Fakes::Fake.new
   end
-  def matches
+  def arg_match
     return Fakes::Matches
   end
   def fake_class(klass)

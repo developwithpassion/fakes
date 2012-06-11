@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Object do
   it "should be able to create a new fake" do
     fake.class.should == Fakes::Fake 
@@ -13,7 +15,7 @@ describe Object do
     end
     
     it "should register a new fake with the class swaps" do
-      swaps.received(:add_fake_for).called_with(Dir,matches.not_nil).should_not be_nil
+      swaps.received(:add_fake_for).called_with(Dir,arg_match.not_nil).should_not be_nil
     end
 
     it "should return the newly created fake" do
