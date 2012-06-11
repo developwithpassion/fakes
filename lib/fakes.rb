@@ -7,17 +7,23 @@ require 'core/arg_matching/matches'
 require 'core/arg_matching/regular_arg_matcher'
 require 'core/arg_behaviour'
 require 'core/arg_set'
+require 'core/class_swap'
+require 'core/class_swaps'
 require 'core/fake'
 require 'core/ignore_set'
 require 'core/method_stub'
+require 'singleton'
 
-module Kernel
+class Object
   def fake
     return Fakes::Fake.new
   end
-end
-class Object
   def matches
     return Fakes::Matches
+  end
+  def fake_class(klass)
+    item = fake
+    Fakes::ClassSwaps.instance.add_fake_for(klass.to_s.to_sym,item)
+    item
   end
 end
