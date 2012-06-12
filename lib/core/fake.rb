@@ -8,6 +8,10 @@ module Fakes
       return @method_invocations.has_key?(name.to_sym) ? @method_invocations[name.to_sym].invoke(args) : handle_unexpected_method_invocation(name,args,block)
     end
 
+    def send(name,*args,&block)
+      return method_missing(name,*args,&block)
+    end
+
     def handle_unexpected_method_invocation(name,args,block)
       method = stub(name.to_sym)
       method.ignore_arg

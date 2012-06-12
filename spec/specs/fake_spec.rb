@@ -134,6 +134,67 @@ module Fakes
       end
     end
 
+    context "when send is triggered" do
+      class FakeInvocation
+        attr_accessor :invoke_was_called,:args,:return_value,:ignores_args
+
+        def initialize(return_value)
+          @return_value = return_value
+        end
+
+        def invoke(args)
+          @args = args
+          return @return_value
+        end
+
+        def ignore_arg
+          @ignores_args = true
+        end
+      end
+      let(:invocations){Hash.new}
+      let(:sut){Fake.new(invocations)}
+      let(:symbol){:hello}
+      let(:invocation){FakeInvocation.new(Object.new)}
+      let(:args){"world"}
+      context "and the method is for an invocation that was prepared" do
+        before (:each) do
+          invocations[symbol] = invocation
+        end
+        before (:each) do
+          @result = sut.send(:hello,args)
+        end
+        it "should trigger the invocation with the arguments" do
+          invocation.args.should == [args]
+        end
+        it "should return the result of triggering the invocation" do
+          @result.should == invocation.return_value
+        end
+      end
+      context "and the method is for an invocation that was not prepared" do
+        before (:each) do
+          MethodStub.stub(:new).and_return(invocation)
+        end
+        before (:each) do
+          @result = sut.send(:hello,args)
+        end
+        it "should add a new invocation which ignores arguments to the list of all invocations" do
+          invocations.has_key?(:hello).should be_true
+        end
+
+        it "should configure the new invocation to ignore all arguments" do
+          invocation.ignores_args.should be_true 
+        end
+
+        it "should invoke the invocation with the arguments" do
+          invocation.args.should == [args]
+        end
+
+        it "should return the result of triggering the new invocation" do
+          @result.should == invocation.return_value
+        end
+      end
+    end
+
     context "scenarios" do
       context "setting up return values using argument matchers" do
         it "should be able to intercept on methods using the matches factory" do
