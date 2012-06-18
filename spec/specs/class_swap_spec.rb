@@ -8,12 +8,12 @@ module Fakes
       let(:sut){ClassSwap.new(MyClass,Object.new)}
 
       it "should store the symbol of the class it is going to replace" do
-        sut.klass.should == MyClass.to_s.to_sym
+        sut.klass.should == :MyClass
       end
     end
     context "when initiated" do
       let(:replacement){Object.new}
-      let(:the_sym){MyClass.to_s.to_sym}
+      let(:the_sym){:MyClass}
       let(:remove_strategy){Proc.new do|klass_to_remove|
         @klass_to_remove = klass_to_remove
         MyClass
@@ -39,7 +39,7 @@ module Fakes
     end
     context "when reset" do
       let(:original){MyClass}
-      let(:the_sym){MyClass.to_s.to_sym}
+      let(:the_sym){:MyClass}
       let(:replacement){Object.new}
       let(:remove_strategy){Proc.new do|klass_to_remove|
         @klass_to_remove = klass_to_remove

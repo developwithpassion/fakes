@@ -1,5 +1,13 @@
 require 'spec_helper'
 
+module SomeModule
+  module NestedModule
+    class AClassInANestedModule
+    end
+  end
+  class ClassInAModule
+  end
+end
 module Fakes
   class SomeClass
     def self.calculate
@@ -93,6 +101,17 @@ module Fakes
         Dir.should == replacement
         ClassSwaps.instance.reset
         Dir.should_not == replacement
+      end
+      it 'should be able to swap class values in another module' do
+        ClassSwaps.instance.add_fake_for(SomeModule::ClassInAModule,replacement)
+        SomeModule::ClassInAModule.should == replacement
+        ClassSwaps.instance.reset
+        SomeModule::ClassInAModule.should_not == replacement
+
+        ClassSwaps.instance.add_fake_for(SomeModule::NestedModule::AClassInANestedModule,replacement)
+        SomeModule::NestedModule::AClassInANestedModule.should == replacement
+        ClassSwaps.instance.reset
+        SomeModule::NestedModule::AClassInANestedModule.should_not == replacement
       end
     end
   end
