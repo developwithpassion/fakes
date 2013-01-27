@@ -14,7 +14,7 @@ require 'core/ignore_set'
 require 'core/method_stub'
 require 'singleton'
 
-class Object
+module Fakes
   def fake(invocations = {})
     item = Fakes::Fake.new
     invocations.each{|method,return_value| item.stub(method).and_return(return_value)}
@@ -32,3 +32,5 @@ class Object
     Fakes::ClassSwaps.instance.reset
   end
 end
+
+include Fakes

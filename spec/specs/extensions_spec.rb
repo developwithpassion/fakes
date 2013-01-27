@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Object do
+describe Fakes do
   it "should be able to create a new fake" do
     fake.class.should == Fakes::Fake 
   end
