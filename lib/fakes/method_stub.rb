@@ -29,19 +29,18 @@ module Fakes
       ignore_arg.and_return(item)
     end
 
-
     def invoke(args)
-      set = @arg_sets.find{|item| item.matches?(args)} || ignore_arg
+      set = arg_sets.find{|item| item.matches?(args)} || ignore_arg
       set.capture_args(args)
       return set.process
     end
 
     def called_with(*args)
-      return @arg_sets.find{|item| item.was_called_with?(args)}
+      return arg_sets.find{|item| item.was_called_with?(args)}
     end
 
     def total_times_called
-      return @arg_sets.inject(0){|sum,item|sum += item.times_called}
+      return arg_sets.inject(0){|sum,item|sum += item.times_called}
     end
 
     def times?(value)

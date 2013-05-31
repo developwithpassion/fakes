@@ -12,7 +12,7 @@ module Fakes
 
     def capture_args(args)
       @times_called += 1
-      arg_sets << args
+      self.arg_sets << args
     end
 
     def matches?(args)
