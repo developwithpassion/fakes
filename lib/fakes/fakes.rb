@@ -1,4 +1,4 @@
-module Fakes
+class Object
   def fake(invocations = {})
     item = Fakes::Fake.new
     invocations.each{|method,return_value| item.stub(method).and_return(return_value)}
