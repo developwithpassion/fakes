@@ -8,8 +8,9 @@ module Fakes
 
     def matches?(args)
       matches = true
-      for index in 0..@all_matchers.count - 1
-        matches &= @all_matchers[index].matches?(args[index])
+      @all_matchers.each_with_index do |matcher, index|
+        value = args[index]
+        matches &= matcher.matches?(value)
         return false unless matches
       end
       matches
