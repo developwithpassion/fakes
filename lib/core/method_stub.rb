@@ -1,13 +1,12 @@
 module Fakes
   class MethodStub
     def initialize(arg_sets = [])
-      array :arg_sets do|a|
-        a.mutator :add_new_set do|set|
-          @arg_sets << set
-          set
-        end
-      end
       @arg_sets = arg_sets
+    end
+
+    def add_new_set(set)
+      @arg_sets << set
+      set
     end
 
     def with(*args)

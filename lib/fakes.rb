@@ -1,5 +1,3 @@
-require 'developwithpassion_arrays'
-
 require 'core/arg_matching/arg_match_factory'
 require 'core/arg_matching/block_arg_matcher'
 require 'core/arg_matching/combined_arg_matcher'
