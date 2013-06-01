@@ -1,12 +1,12 @@
 module Fakes
   class ArgMatchFactory
     def self.create_arg_matcher_using(args)
-      matcher = CombinedArgMatcher.new      
+      combined_matcher = CombinedArgMatcher.new      
       args.each do|arg|
-        current_matcher = arg.respond_to?(:matches?) ? arg : RegularArgMatcher.new(arg)
-        matcher.add current_matcher
+        matcher = arg.respond_to?(:matches?) ? arg : RegularArgMatcher.new(arg)
+        combined_matcher << matcher
       end
-      matcher
+      combined_matcher
     end
   end
 end

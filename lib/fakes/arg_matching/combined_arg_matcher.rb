@@ -21,6 +21,7 @@ module Fakes
     def add(matcher)
       all_matchers << matcher
     end
+    alias :<< :add
     
   end
 end
