@@ -200,13 +200,13 @@ module Fakes
         it "should be able to intercept on methods using the matches factory" do
           fake = Fake.new
 
-          fake.stub(:hello).with(Matches.regex(/W/)).and_return("Hello World") 
+          fake.stub(:hello).with(ArgumentMatching.regex(/W/)).and_return("Hello World") 
           fake.hello("World").should == "Hello World"
         end
         it "should be able to intercept on methods using combinations of explicit values and matchers" do
           fake = Fake.new
 
-          fake.stub(:hello).with(Matches.regex(/W/),Matches.greater_than(3),10).and_return("Hello World") 
+          fake.stub(:hello).with(ArgumentMatching.regex(/W/),ArgumentMatching.greater_than(3),10).and_return("Hello World") 
 
           fake.hello("World",4,10).should == "Hello World"
           fake.hello("World",2,10).should == nil

@@ -1,7 +1,7 @@
 require 'fakes/arg_matching/arg_match_factory'
 require 'fakes/arg_matching/block_arg_matcher'
 require 'fakes/arg_matching/combined_arg_matcher'
-require 'fakes/arg_matching/matches'
+require 'fakes/arg_matching/argument_matching'
 require 'fakes/arg_matching/regular_arg_matcher'
 require 'fakes/arg_behaviour'
 require 'fakes/arg_set'
