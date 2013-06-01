@@ -24,7 +24,7 @@ module Fakes
     end
 
     def regex(pattern)
-      condition { |string_value| pattern =~ string_value }
+      condition { |string_argument| pattern =~ string_argument }
     end
 
     def condition(&conditional_block)
