@@ -60,15 +60,16 @@ module Fakes
       let(:invocations){Hash.new}
       let(:sut){Fake.new(invocations)}
       let(:existing){:hello}
-      let(:method_invocation){Object.new}
+      let(:method_invocation){ Object.new }
 
       before (:each) do
         invocations[existing] = method_invocation
+        method_invocation.stub(:called_with).and_return(false)
       end
 
 
       it "should base its decision on the list of received invocations" do
-        [:other,existing].each do|item|
+        [:other, existing].each do|item|
           sut.never_received?(item).should_not be_equal(invocations.has_key?(item))
         end
       end
@@ -291,6 +292,15 @@ module Fakes
           fake.received(:hello).called_with(1,[1,2,3,4]).should_not be_nil
           fake.received(:hello).called_with(1,[1,2,3,5]).should be_nil
         end
+
+        it 'should be able to determine if it received a method call' do
+          fake = Fake.new
+          fake.hello(1,[1,2,3,4])
+            
+          fake.received?(:hello,1,[1,2,3,4]).should be_true
+          fake.received?(:hello).should be_true
+        end
+        
 
       end
     end

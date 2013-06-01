@@ -26,8 +26,16 @@ module Fakes
       return @method_invocations[symbol]
     end
 
-    def never_received?(symbol)
-      return !@method_invocations.has_key?(symbol)
+    def never_received?(symbol, *args)
+      return !received?(symbol, *args)
+    end
+
+    def received?(symbol, *args)
+      method = received(symbol)
+      return false if method.nil?
+
+      argument_set = method.called_with(*args)
+      return !argument_set.nil?
     end
   end
 end
