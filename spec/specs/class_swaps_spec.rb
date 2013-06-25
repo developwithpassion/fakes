@@ -102,6 +102,7 @@ module Fakes
         ClassSwaps.instance.reset
         Dir.should_not == replacement
       end
+
       it 'should be able to swap class values in another module' do
         ClassSwaps.instance.add_fake_for(SomeModule::ClassInAModule,replacement)
         SomeModule::ClassInAModule.should == replacement

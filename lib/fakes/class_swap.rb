@@ -4,14 +4,37 @@ module Fakes
     attr_reader :klass
 
     def initialize(fully_qualified_klass,replacement,options ={})
-      klass_parts = fully_qualified_klass.to_s
-      parts = klass_parts.split('::')
-      the_module = parts.count == 1 ? Object : eval(parts.slice(0,parts.count - 1).join('::'))
-      @klass = parts[parts.count - 1].to_s.to_sym
+      modules = get_modules(fully_qualified_klass)
+      @klass = modules.keys.last.to_sym
+
+      class_root = modules.keys[modules.keys.count - 2]
+      class_root = modules[class_root.to_sym]
 
       @replacement = replacement
-      @remove_strategy = options.fetch(:remove_strategy,lambda{|klass_symbol| the_module.send(:remove_const,klass_symbol)})
-      @set_strategy = options.fetch(:set_strategy,lambda{|klass_symbol,new_value| the_module.const_set(klass_symbol,new_value)})
+
+      @remove_strategy = options.fetch(:remove_strategy, Proc.new do |klass| 
+        class_root.send(:remove_const, klass)
+      end)
+
+      @set_strategy = options.fetch(:set_strategy, Proc.new do |klass, new_value|
+        class_root.const_set(klass.to_sym, new_value)
+      end)
+
+    end
+    
+    def get_modules(fully_qualified_klass)
+      klass_parts = fully_qualified_klass.to_s.split("::")
+      root = Object
+      modules = {}
+      modules[:Object] = root
+
+      klass_parts.each do |part|
+        class_or_module = root.const_get(part.to_sym)
+        modules[part.to_sym] = class_or_module
+        root = class_or_module
+      end
+
+      modules
     end
 
     def initiate

@@ -10,7 +10,7 @@ module Fakes
     end
 
     def add_fake_for(klass,the_fake)
-      symbol = klass.to_s.to_sym
+      symbol = klass.name.to_sym
       ensure_swap_does_not_already_exist_for(symbol)
       swap = ClassSwap.new(klass,the_fake)
       @swaps[symbol] = swap
