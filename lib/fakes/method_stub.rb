@@ -17,6 +17,10 @@ module Fakes
       ignore_arg.throws(exception)
     end
 
+    def run(&block)
+      ignore_arg.run(&block)
+    end
+
     def ignore_arg
       return add_new_argument_set(IgnoreSet.new)
     end

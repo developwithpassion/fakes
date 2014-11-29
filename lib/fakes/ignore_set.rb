@@ -11,7 +11,7 @@ module Fakes
     end
 
     def capture_args(args)
-      @times_called += 1
+      super
       self.arg_sets << args
     end
 
