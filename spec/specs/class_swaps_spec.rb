@@ -43,11 +43,11 @@ module Fakes
         end
 
         it 'should add a new class swap to the set of class swaps' do
-          ClassSwaps.instance.swaps[the_sym].should == the_swap
+          expect(ClassSwaps.instance.swaps[the_sym]).to eql(the_swap)
         end
 
         it "should initiate the swap" do
-          the_swap.inititated.should be_true
+          expect(the_swap.inititated).to be_true
         end
         
 
@@ -67,7 +67,7 @@ module Fakes
         end
 
         it 'should throw an error indicating that the swap is already present' do
-          @exception.message.should contain(MyClass.to_s)
+          expect(@exception.message).to contain(MyClass.to_s)
         end
       end
     end
@@ -86,11 +86,11 @@ module Fakes
       end
 
       it 'should reset each of the swaps' do
-        first_swap.was_reset.should be_true
-        second_swap.was_reset.should be_true
+        expect(first_swap.was_reset).to be_true
+        expect(second_swap.was_reset).to be_true
       end
       it "should clear the swaps" do
-        sut.swaps.count.should == 0
+        expect(sut.swaps.count).to eql(0)
       end
     end
     context "Integration Test" do
@@ -98,21 +98,21 @@ module Fakes
       
       it 'should be able to swap class values' do
         ClassSwaps.instance.add_fake_for(Dir,replacement)
-        Dir.should == replacement
+        expect(Dir).to eql(replacement)
         ClassSwaps.instance.reset
-        Dir.should_not == replacement
+        expect(Dir).to_not eql(replacement)
       end
 
       it 'should be able to swap class values in another module' do
         ClassSwaps.instance.add_fake_for(SomeModule::ClassInAModule,replacement)
-        SomeModule::ClassInAModule.should == replacement
+        expect(SomeModule::ClassInAModule).to eql(replacement)
         ClassSwaps.instance.reset
-        SomeModule::ClassInAModule.should_not == replacement
+        expect(SomeModule::ClassInAModule).to_not eql(replacement)
 
         ClassSwaps.instance.add_fake_for(SomeModule::NestedModule::AClassInANestedModule,replacement)
-        SomeModule::NestedModule::AClassInANestedModule.should == replacement
+        expect(SomeModule::NestedModule::AClassInANestedModule).to eql(replacement)
         ClassSwaps.instance.reset
-        SomeModule::NestedModule::AClassInANestedModule.should_not == replacement
+        expect(SomeModule::NestedModule::AClassInANestedModule).to_not eql(replacement)
       end
     end
   end

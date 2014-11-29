@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Fakes do
   it "should be able to create a new fake" do
-    fake.class.should == Fakes::Fake 
+    expect(fake.class).to eql(Fakes::Fake )
   end
   it "should be able to create a new fake and specify return values for methods" do
     item = fake :hello => 'World', :age => 33
-    item.hello.should == 'World'
-    item.age.should == 33
+    expect(item.hello).to eql('World')
+    expect(item.age).to eql(33)
   end
 
   context "when specifying a fake for a class" do
@@ -20,11 +20,11 @@ describe Fakes do
     end
     
     it "should register a new fake with the class swaps" do
-      swaps.received(:add_fake_for).called_with(Dir,arg_match.not_nil).should_not be_nil
+      expect(swaps.received(:add_fake_for).called_with(Dir,arg_match.not_nil)).to_not be_nil
     end
 
     it "should return the newly created fake" do
-      @result.should_not be_nil
+      expect(@result).to_not be_nil
     end
   end
   context "when faking a class and specifying return values" do
@@ -35,7 +35,7 @@ describe Fakes do
       reset_fake_classes
     end
     it "should replace the class with the fake return to return the values specified" do
-      Dir.exist?('hello').should be_true
+      expect(Dir.exist?('hello')).to be_true
     end
   end
   

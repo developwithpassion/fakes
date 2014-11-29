@@ -16,10 +16,10 @@ module Fakes
           @result = sut.stub(symbol)
         end
         it "should add a new method stub to the list of all invocations" do
-          invocations[symbol].should == new_method
+          expect(invocations[symbol]).to eql(new_method)
         end
         it "should return the method invocation to continue specifying call behaviour" do
-          @result.should == new_method 
+          expect(@result).to eql(new_method )
         end
       end
 
@@ -32,11 +32,11 @@ module Fakes
         end
 
         it "should not readd the method to the list of invocations" do
-          invocations.count.should == 1
+          expect(invocations.count).to eql(1)
         end
 
         it "should return the method invocation to continue specifying call behaviour" do
-          @result.should == new_method 
+          expect(@result).to eql(new_method )
         end
       end
     end
@@ -53,7 +53,7 @@ module Fakes
         @result = sut.received(symbol)
       end
       it "should return the method invocation for the called method" do
-        @result.should == method_invocation 
+        expect(@result).to eql(method_invocation )
       end
     end
     context "when verifying whether a call was never received" do
@@ -70,7 +70,7 @@ module Fakes
 
       it "should base its decision on the list of received invocations" do
         [:other, existing].each do|item|
-          sut.never_received?(item).should_not be_equal(invocations.has_key?(item))
+          expect(sut.never_received?(item)).to_not be_equal(invocations.has_key?(item))
         end
       end
     end
@@ -104,10 +104,10 @@ module Fakes
           @result = sut.hello(args)
         end
         it "should trigger the invocation with the arguments" do
-          invocation.args.should == [args]
+          expect(invocation.args).to eql([args])
         end
         it "should return the result of triggering the invocation" do
-          @result.should == invocation.return_value
+          expect(@result).to eql(invocation.return_value)
         end
       end
       context "and the method is for an invocation that was not prepared" do
@@ -118,19 +118,19 @@ module Fakes
           @result = sut.hello(args)
         end
         it "should add a new invocation which ignores arguments to the list of all invocations" do
-          invocations.has_key?(:hello).should be_true
+          expect(invocations.has_key?(:hello)).to be_true
         end
 
         it "should configure the new invocation to ignore all arguments" do
-          invocation.ignores_args.should be_true 
+          expect(invocation.ignores_args).to be_true
         end
 
         it "should invoke the invocation with the arguments" do
-          invocation.args.should == [args]
+          expect(invocation.args).to eql([args])
         end
 
         it "should return the result of triggering the new invocation" do
-          @result.should == invocation.return_value
+          expect(@result).to eql(invocation.return_value)
         end
       end
     end
@@ -165,10 +165,10 @@ module Fakes
           @result = sut.send(:hello,args)
         end
         it "should trigger the invocation with the arguments" do
-          invocation.args.should == [args]
+          expect(invocation.args).to eql([args])
         end
         it "should return the result of triggering the invocation" do
-          @result.should == invocation.return_value
+          expect(@result).to eql(invocation.return_value)
         end
       end
       context "and the method is for an invocation that was not prepared" do
@@ -179,19 +179,19 @@ module Fakes
           @result = sut.send(:hello,args)
         end
         it "should add a new invocation which ignores arguments to the list of all invocations" do
-          invocations.has_key?(:hello).should be_true
+          expect(invocations.has_key?(:hello)).to be_true
         end
 
         it "should configure the new invocation to ignore all arguments" do
-          invocation.ignores_args.should be_true 
+          expect(invocation.ignores_args).to be_true
         end
 
         it "should invoke the invocation with the arguments" do
-          invocation.args.should == [args]
+          expect(invocation.args).to eql([args])
         end
 
         it "should return the result of triggering the new invocation" do
-          @result.should == invocation.return_value
+          expect(@result).to eql(invocation.return_value)
         end
       end
     end
@@ -202,103 +202,103 @@ module Fakes
           fake = Fake.new
 
           fake.stub(:hello).with(ArgumentMatching.regex(/W/)).and_return("Hello World") 
-          fake.hello("World").should == "Hello World"
+          expect(fake.hello("World")).to eql("Hello World")
         end
         it "should be able to intercept on methods using combinations of explicit values and matchers" do
           fake = Fake.new
 
           fake.stub(:hello).with(ArgumentMatching.regex(/W/),ArgumentMatching.greater_than(3),10).and_return("Hello World") 
 
-          fake.hello("World",4,10).should == "Hello World"
-          fake.hello("World",2,10).should == nil
+          expect(fake.hello("World",4,10)).to eql("Hello World")
+          expect(fake.hello("World",2,10)).to be_nil
         end
       end
       context "setting up return values" do
         it "should be able to intercept on methods that take a singular value" do
           fake = Fake.new
           fake.stub(:hello).with("World").and_return("Hello World") 
-          fake.hello("World").should == "Hello World"
+          expect(fake.hello("World")).to eql("Hello World")
         end
 
         it "should be able to intercept on methods that take a hash" do
           fake = Fake.new
           fake.stub(:hello).with(:id => "JP",:age => 33).and_return("Hello World") 
-          fake.hello(:id => "JP",:age => 33).should == "Hello World"
+          expect(fake.hello(:id => "JP",:age => 33)).to eql("Hello World")
         end
 
         it "should be able to intercept on methods that take a value and a hash" do
           fake = Fake.new
           fake.stub(:hello).with(1,:id => "JP",:age => 33).and_return("Hello World") 
 
-          fake.hello(1,:id => "JP",:age => 33).should == "Hello World"
-          fake.hello(2,:id => "JP",:age => 33).should be_nil
+          expect(fake.hello(1,:id => "JP",:age => 33)).to eql("Hello World")
+          expect(fake.hello(2,:id => "JP",:age => 33)).to be_nil
         end
 
         it "should be able to intercept on methods that take an array" do
           fake = Fake.new
           fake.stub(:hello).with([1,2,3,4]).and_return("Hello World") 
 
-          fake.hello([1,2,3,4]).should == "Hello World"
+          expect(fake.hello([1,2,3,4])).to eql("Hello World")
         end
 
         it "should be able to intercept on methods that take an value, and an array" do
           fake = Fake.new
           fake.stub(:hello).with(1,[1,2,3,4]).and_return("Hello World") 
 
-          fake.hello(1,[1,2,3,4]).should == "Hello World"
+          expect(fake.hello(1,[1,2,3,4])).to eql("Hello World")
         end
       end
       context "verifying calls were made" do
         it "should be able to intercept on methods that take a singular value" do
           fake = Fake.new
           fake.hello("World")
-          fake.received(:hello).called_with("World").should be_true
+          expect(fake.received(:hello).called_with("World")).to be_true
         end
 
         it "should be able to intercept on methods that have no arguments" do
           fake = Fake.new
           fake.hello
-          fake.received(:hello).should_not be_nil
+          expect(fake.received(:hello)).to_not be_nil
         end
 
 
         it "should be able to intercept on methods that take a hash" do
           fake = Fake.new
           fake.hello(:id => "JP",:age => 33)
-          fake.received(:hello).called_with(:id => "JP",:age => 33).should_not be_nil
-          fake.received(:hello).called_with(:id => "JS",:age => 33).should be_nil
+          expect(fake.received(:hello).called_with(:id => "JP",:age => 33)).to_not be_nil
+          expect(fake.received(:hello).called_with(:id => "JS",:age => 33)).to be_nil
         end
 
         it "should be able to intercept on methods that take a value and a hash" do
           fake = Fake.new
 
           fake.hello(1,:id => "JP",:age => 33)
-          fake.received(:hello).called_with(1,:id => "JP",:age => 33).should_not be_nil
-          fake.received(:hello).called_with(1,:id => "JS",:age => 33).should be_nil
+          expect(fake.received(:hello).called_with(1,:id => "JP",:age => 33)).to_not be_nil
+          expect(fake.received(:hello).called_with(1,:id => "JS",:age => 33)).to be_nil
         end
 
         it "should be able to intercept on methods that take an array" do
           fake = Fake.new
 
           fake.hello([1,2,3,4])
-          fake.received(:hello).called_with([1,2,3,4]).should_not be_nil
-          fake.received(:hello).called_with([1,2,3,5]).should be_nil
+          expect(fake.received(:hello).called_with([1,2,3,4])).to_not be_nil
+          expect(fake.received(:hello).called_with([1,2,3,5])).to be_nil
         end
 
         it "should be able to intercept on methods that take an value, and an array" do
           fake = Fake.new
           fake.hello(1,[1,2,3,4])
 
-          fake.received(:hello).called_with(1,[1,2,3,4]).should_not be_nil
-          fake.received(:hello).called_with(1,[1,2,3,5]).should be_nil
+          expect(fake.received(:hello).called_with(1,[1,2,3,4])).to_not be_nil
+          expect(fake.received(:hello).called_with(1,[1,2,3,5])).to be_nil
         end
 
         it 'should be able to determine if it received a method call' do
           fake = Fake.new
           fake.hello(1,[1,2,3,4])
             
-          fake.received?(:hello,1,[1,2,3,4]).should be_true
-          fake.received?(:hello).should be_true
+          expect(fake.received?(:hello,1,[1,2,3,4])).to be_true
+          expect(fake.received?(:hello)).to be_true
         end
         
 

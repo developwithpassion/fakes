@@ -16,10 +16,10 @@ module Fakes
         @result = sut.with(args)
       end
       it "should add a new argument set to its list of arguments" do
-        arg_sets[0].should == argument_set
+        expect(arg_sets[0]).to eql(argument_set)
       end
       it "should return the argument set to continue specifying behaviour" do
-        @result.should == argument_set
+        expect(@result).to eql(argument_set)
       end
     end
 
@@ -35,10 +35,10 @@ module Fakes
         @result = sut.ignore_arg
       end
       it "should add the ignored set to the list of argument sets" do
-        arg_sets[0].should == ignored_set
+        expect(arg_sets[0]).to eql(ignored_set)
       end
       it "should return the ignored set to specify other behaviour" do
-        @result.should == ignored_set
+        expect(@result).to eql(ignored_set)
       end
     end
 
@@ -64,10 +64,10 @@ module Fakes
         sut.throws(exception)
       end
       it "should add the ignored set to the set of args sets" do
-        arg_sets[0].should == ignored_set
+        expect(arg_sets[0]).to eql(ignored_set)
       end
       it "should have stored the exception on the new argument set" do
-        ignored_set.exception.should == exception
+        expect(ignored_set.exception).to eql(exception)
       end
     end
     context "when invoked with a set of arguments" do
@@ -92,10 +92,10 @@ module Fakes
           @result = sut.invoke(arguments)
         end
         it "should tell the argument set to capture the arguments it was called with" do
-          arg_set.args.should == [arguments]
+          expect(arg_set.args).to eql([arguments])
         end
         it "should return using from the arg set" do
-          @result.should == 2
+          expect(@result).to eql(2)
         end
 
       end
@@ -110,10 +110,10 @@ module Fakes
           @result = sut.invoke(arguments)
         end
         it "should tell the argument set to capture the arguments it was called with" do
-          arg_set.args.should == [arguments]
+          expect(arg_set.args).to eql([arguments])
         end
         it "should return using from the missing arg set" do
-          @result.should == 2
+          expect(@result).to eql(2)
         end
       end
 
@@ -142,7 +142,7 @@ module Fakes
         end
 
         it "should return the argument set that was called with the arguments" do
-          @result.should == arg_set
+          expect(@result).to eql(arg_set)
         end
       end
       context "and none of its argument sets were called with the arguments" do
@@ -150,7 +150,7 @@ module Fakes
           @result = sut.called_with(arguments)
         end
         it "should return nil" do
-          @result.should be_nil
+          expect(@result).to be_nil
         end
       end
 
@@ -170,7 +170,7 @@ module Fakes
       end
 
       it "it should return the sum of the invocations of its argument sets" do
-        sut.total_times_called.should == 5
+        expect(sut.total_times_called).to eql(5)
       end
     end
     context "when verifying whether it was called a certain number of times" do
@@ -187,8 +187,8 @@ module Fakes
       end
 
       it "it should return whether the sum of its argset invocations is the same as the number of request made" do
-        sut.times?(5).should be_true
-        sut.times?(3).should be_false
+        expect(sut.times?(5)).to be_true
+        expect(sut.times?(3)).to be_false
       end
     end
   end

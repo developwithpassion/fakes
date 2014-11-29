@@ -8,7 +8,7 @@ module Fakes
       let(:sut){ClassSwap.new(MyClass,Object.new)}
 
       it "should store the symbol of the class it is going to replace" do
-        sut.klass.should == :MyClass
+        expect(sut.klass).to eql(:MyClass)
       end
     end
     context "when initiated" do
@@ -30,11 +30,11 @@ module Fakes
       end
       
       it "should remove the current value of the class constant and store it for reset at a later point" do
-        @klass_to_remove.should == the_sym
+        expect(@klass_to_remove).to eql(the_sym)
       end
       it "should replace the current value of the symbol with the replacement value" do
-        @klass_to_change.should == the_sym
-        @replacement_value.should == replacement
+        expect(@klass_to_change).to eql(the_sym)
+        expect(@replacement_value).to eql(replacement)
       end
     end
     context "when reset" do
@@ -64,9 +64,9 @@ module Fakes
       end
       
       it "should switch the value of the class back to its original value" do
-        @klass_to_remove.should == the_sym
-        @klass_to_change.should == the_sym
-        @replacement_value.should == MyClass
+        expect(@klass_to_remove).to eql(the_sym)
+        expect(@klass_to_change).to eql(the_sym)
+        expect(@replacement_value).to eql(MyClass)
       end
     end
   end

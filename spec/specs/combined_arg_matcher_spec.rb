@@ -21,7 +21,7 @@ module Fakes
       
       
       it "should match if each of its argument matchers matches its respective argument" do
-        @result.should be_true
+        expect(@result).to be_true
       end
     end
     context "when adding a matcher" do
@@ -36,7 +36,7 @@ module Fakes
       
       
       it "should add the matcher to its set of matchers" do
-        matchers[0].should == first_matcher
+        expect(matchers[0]).to eql(first_matcher)
       end
     end
   end

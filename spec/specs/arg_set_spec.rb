@@ -7,7 +7,7 @@ module Fakes
 
       
       it "should initialize required members" do
-        sut.times_called.should == 0
+        expect(sut.times_called).to eql(0)
       end
 
     end

@@ -9,9 +9,10 @@ module Fakes
         end
         
         it "should create a combined matcher that is composed of regular matchers" do
-          @result.all_matchers.count.should == 3
+          expect(@result.all_matchers.count).to eql(3)
+          
           @result.all_matchers.each do|matcher|
-            matcher.class.should == RegularArgMatcher
+            expect(matcher.class).to eql(RegularArgMatcher)
           end
         end
       end
@@ -26,8 +27,8 @@ module Fakes
         end
         
         it "should create a combined matcher that only using the matchers provided" do
-          @result.all_matchers.count.should == 1
-          @result.all_matchers[0].should == matcher
+          expect(@result.all_matchers.count).to eql(1)
+          expect(@result.all_matchers[0]).to eql(matcher)
         end
       end
     end

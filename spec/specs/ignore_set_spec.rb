@@ -6,14 +6,14 @@ module Fakes
 
     context "when created" do
       it "should initialize required members" do
-        sut.times_called.should == 0
+        expect(sut.times_called).to eql(0)
       end
     end
 
     context "when matching an argument set" do
       it "should match any argument set" do
-        sut.matches?([1,2,3,4]).should be_true
-        sut.matches?([3,"hello",4,5]).should be_true
+        expect(sut.matches?([1,2,3,4])).to be_true
+        expect(sut.matches?([3,"hello",4,5])).to be_true
       end
     end
 
@@ -23,7 +23,7 @@ module Fakes
         sut.capture_args(2)
       end
       it "should store a list for each set of arguments" do
-        sut.arg_sets.count.should == 2
+        expect(sut.arg_sets.count).to eql(2)
       end
     end
 
@@ -42,7 +42,7 @@ module Fakes
       end
 
       it "should make the decision by using the matcher created to match the argument sets that were stored" do
-        sut.was_called_with?(2).should be_true
+        expect(sut.was_called_with?(2)).to be_true
       end
     end
   end
