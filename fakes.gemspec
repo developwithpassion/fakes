@@ -1,10 +1,7 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib",__FILE__)
-require "fakes/version"
-
 Gem::Specification.new do |s|
   s.name        = "fakes"
-  s.version     = Fakes::VERSION
+  s.version     = '1.1.6'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Develop With Passion®"]
   s.email       = ["open_source@developwithpassion.com"]
@@ -17,7 +14,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency('rspec', "~> 2.14.1")
+  s.add_development_dependency "rspec"
   s.add_development_dependency "rake"
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"
