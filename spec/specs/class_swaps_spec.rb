@@ -86,7 +86,7 @@ module Fakes
 
       it 'should reset each of the swaps' do
         expect(first_swap.was_reset).to be_true
-        expect(second_swap.was_reset).to be_true
+        expect(second_swap.was_reset).to be_truthy
       end
       it 'should clear the swaps' do
         expect(sut.swaps.count).to eql(0)

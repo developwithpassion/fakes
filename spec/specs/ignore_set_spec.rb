@@ -13,7 +13,7 @@ module Fakes
     context 'when matching an argument set' do
       it 'should match any argument set' do
         expect(sut.matches?([1, 2, 3, 4])).to be_true
-        expect(sut.matches?([3, 'hello', 4, 5])).to be_true
+        expect(sut.matches?([3, 'hello', 4, 5])).to be_truthy
       end
     end
 

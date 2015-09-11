@@ -296,7 +296,7 @@ module Fakes
           fake.hello(1, [1, 2, 3, 4])
 
           expect(fake.received?(:hello, 1, [1, 2, 3, 4])).to be_true
-          expect(fake.received?(:hello)).to be_true
+          expect(fake.received?(:hello)).to be_truthy
         end
       end
       context 'running a block when a call is made' do

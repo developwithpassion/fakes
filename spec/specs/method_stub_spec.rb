@@ -185,7 +185,7 @@ module Fakes
 
       it 'it should return whether the sum of its argset invocations is the same as the number of request made' do
         expect(sut.times?(5)).to be_true
-        expect(sut.times?(3)).to be_false
+        expect(sut.times?(3)).to be_falsey
       end
     end
   end
