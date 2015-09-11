@@ -29,7 +29,7 @@ module Fakes
       end
       let(:sut) { ClassSwap.new(MyClass, replacement, remove_strategy: remove_strategy, set_strategy: set_strategy) }
 
-      before (:each) do
+      before(:each) do
         sut.initiate
       end
 
@@ -60,11 +60,11 @@ module Fakes
       end
       let(:sut) { ClassSwap.new(MyClass, replacement, remove_strategy: remove_strategy, set_strategy: set_strategy) }
 
-      before (:each) do
+      before(:each) do
         sut.original = MyClass
       end
 
-      before (:each) do
+      before(:each) do
         sut.reset
       end
 

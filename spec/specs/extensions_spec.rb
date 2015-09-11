@@ -12,10 +12,10 @@ describe Fakes do
 
   context 'when specifying a fake for a class' do
     let(:swaps) { fake }
-    before (:each) do
+    before(:each) do
       Fakes::ClassSwaps.stub(:instance).and_return(swaps)
     end
-    before (:each) do
+    before(:each) do
       @result = fake_class Dir
     end
 
@@ -28,23 +28,23 @@ describe Fakes do
     end
   end
   context 'when faking a class and specifying return values' do
-    before (:each) do
+    before(:each) do
       fake_class Dir, exist?: true
     end
-    after (:each) do
+    after(:each) do
       reset_fake_classes
     end
     it 'should replace the class with the fake return to return the values specified' do
-      expect(Dir.exist?('hello')).to be_true
+      expect(Dir.exist?('hello')).to be true
     end
   end
 
   context 'resetting fake classes' do
     let(:swaps) { fake }
-    before (:each) do
+    before(:each) do
       Fakes::ClassSwaps.stub(:instance).and_return(swaps)
     end
-    before (:each) do
+    before(:each) do
       reset_fake_classes
     end
     it 'should be able to reset all of the fake classes' do

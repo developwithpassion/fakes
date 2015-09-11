@@ -40,7 +40,7 @@ module Fakes
     end
 
     def total_times_called
-      @arg_sets.inject(0) { |sum, item| sum += item.times_called }
+      @arg_sets.inject(0) { |sum, item| sum + item.times_called }
     end
 
     def times?(value)

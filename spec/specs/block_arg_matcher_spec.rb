@@ -6,7 +6,7 @@ module Fakes
       let(:sut) { BlockArgMatcher.new(->(item) { true }) }
 
       it 'should decide by using its provided block' do
-        expect(sut.matches?(2)).to be_true
+        expect(sut.matches?(2)).to be true
       end
     end
   end

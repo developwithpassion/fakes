@@ -32,14 +32,14 @@ module Fakes
         let(:replacement) { Object.new }
         let(:the_swap) { MySwap.new }
         let(:sut) { ClassSwaps.instance }
-        before (:each) do
+        before(:each) do
           ClassSwap.stub(:new).with(MyClass, replacement).and_return(the_swap)
         end
-        after (:each) do
+        after(:each) do
           sut.swaps.clear
         end
 
-        before (:each) do
+        before(:each) do
           sut.add_fake_for(MyClass, replacement)
         end
 
@@ -48,20 +48,20 @@ module Fakes
         end
 
         it 'should initiate the swap' do
-          expect(the_swap.inititated).to be_true
+          expect(the_swap.inititated).to be true
         end
       end
       context 'and it already exist' do
         let(:the_sym) { MyClass.to_s.to_sym }
         let(:sut) { ClassSwaps.instance }
-        before (:each) do
+        before(:each) do
           sut.swaps[the_sym] = 2
         end
-        after (:each) do
+        after(:each) do
           sut.swaps.clear
         end
 
-        before (:each) do
+        before(:each) do
           @exception = catch_exception { sut.add_fake_for(MyClass, Object.new) }
         end
 
@@ -75,17 +75,17 @@ module Fakes
       let(:second_swap) { MySwap.new }
       let(:sut) { ClassSwaps.instance }
 
-      before (:each) do
+      before(:each) do
         sut.swaps[:first] = first_swap
         sut.swaps[:second] = second_swap
       end
 
-      before (:each) do
+      before(:each) do
         sut.reset
       end
 
       it 'should reset each of the swaps' do
-        expect(first_swap.was_reset).to be_true
+        expect(first_swap.was_reset).to be true
         expect(second_swap.was_reset).to be_truthy
       end
       it 'should clear the swaps' do

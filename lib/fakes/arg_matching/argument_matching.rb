@@ -19,7 +19,7 @@ module Fakes
     end
 
     def in_range(range)
-      condition { |item| range === item }
+      condition { |item| range.include?(item) }
     end
 
     def regex(pattern)

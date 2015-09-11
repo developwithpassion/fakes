@@ -9,10 +9,10 @@ module Fakes
       let(:new_method) { Object.new }
 
       context 'and the method is not currently setup to be called' do
-        before (:each) do
+        before(:each) do
           MethodStub.stub(:new).and_return(new_method)
         end
-        before (:each) do
+        before(:each) do
           @result = sut.stub(symbol)
         end
         it 'should add a new method stub to the list of all invocations' do
@@ -24,10 +24,10 @@ module Fakes
       end
 
       context 'and the method is already in the list of invocations' do
-        before (:each) do
+        before(:each) do
           invocations[symbol] = new_method
         end
-        before (:each) do
+        before(:each) do
           @result = sut.stub(symbol)
         end
 
@@ -46,10 +46,10 @@ module Fakes
       let(:symbol) { :hello }
       let(:method_invocation) { Object.new }
 
-      before (:each) do
+      before(:each) do
         invocations[symbol] = method_invocation
       end
-      before (:each) do
+      before(:each) do
         @result = sut.received(symbol)
       end
       it 'should return the method invocation for the called method' do
@@ -62,7 +62,7 @@ module Fakes
       let(:existing) { :hello }
       let(:method_invocation) { Object.new }
 
-      before (:each) do
+      before(:each) do
         invocations[existing] = method_invocation
         method_invocation.stub(:called_with).and_return(false)
       end
@@ -96,10 +96,10 @@ module Fakes
       let(:invocation) { FakeInvocation.new(Object.new) }
       let(:args) { 'world' }
       context 'and the method is for an invocation that was prepared' do
-        before (:each) do
+        before(:each) do
           invocations[symbol] = invocation
         end
-        before (:each) do
+        before(:each) do
           @result = sut.hello(args)
         end
         it 'should trigger the invocation with the arguments' do
@@ -110,18 +110,18 @@ module Fakes
         end
       end
       context 'and the method is for an invocation that was not prepared' do
-        before (:each) do
+        before(:each) do
           MethodStub.stub(:new).and_return(invocation)
         end
-        before (:each) do
+        before(:each) do
           @result = sut.hello(args)
         end
         it 'should add a new invocation which ignores arguments to the list of all invocations' do
-          expect(invocations.key?(:hello)).to be_true
+          expect(invocations.key?(:hello)).to be true
         end
 
         it 'should configure the new invocation to ignore all arguments' do
-          expect(invocation.ignores_args).to be_true
+          expect(invocation.ignores_args).to be true
         end
 
         it 'should invoke the invocation with the arguments' do
@@ -157,10 +157,10 @@ module Fakes
       let(:invocation) { FakeInvocation.new(Object.new) }
       let(:args) { 'world' }
       context 'and the method is for an invocation that was prepared' do
-        before (:each) do
+        before(:each) do
           invocations[symbol] = invocation
         end
-        before (:each) do
+        before(:each) do
           @result = sut.send(:hello, args)
         end
         it 'should trigger the invocation with the arguments' do
@@ -171,18 +171,18 @@ module Fakes
         end
       end
       context 'and the method is for an invocation that was not prepared' do
-        before (:each) do
+        before(:each) do
           MethodStub.stub(:new).and_return(invocation)
         end
-        before (:each) do
+        before(:each) do
           @result = sut.send(:hello, args)
         end
         it 'should add a new invocation which ignores arguments to the list of all invocations' do
-          expect(invocations.key?(:hello)).to be_true
+          expect(invocations.key?(:hello)).to be true
         end
 
         it 'should configure the new invocation to ignore all arguments' do
-          expect(invocation.ignores_args).to be_true
+          expect(invocation.ignores_args).to be true
         end
 
         it 'should invoke the invocation with the arguments' do
@@ -251,7 +251,7 @@ module Fakes
         it 'should be able to intercept on methods that take a singular value' do
           fake = Fake.new
           fake.hello('World')
-          expect(fake.received(:hello).called_with('World')).to be_true
+          expect(fake.received(:hello).called_with('World')).to be_truthy
         end
 
         it 'should be able to intercept on methods that have no arguments' do
@@ -295,7 +295,7 @@ module Fakes
           fake = Fake.new
           fake.hello(1, [1, 2, 3, 4])
 
-          expect(fake.received?(:hello, 1, [1, 2, 3, 4])).to be_true
+          expect(fake.received?(:hello, 1, [1, 2, 3, 4])).to be true
           expect(fake.received?(:hello)).to be_truthy
         end
       end

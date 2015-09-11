@@ -4,7 +4,7 @@ module Fakes
   describe ArgMatchFactory do
     context 'when creating an argument matcher' do
       context 'and none of the arguments are matchers themselves' do
-        before (:each) do
+        before(:each) do
           @result = ArgMatchFactory.create_arg_matcher_using([2, 3, 4])
         end
 
@@ -18,11 +18,11 @@ module Fakes
       end
       context 'and the arguments are matchers themselves' do
         let(:matcher) { Object.new }
-        before (:each) do
+        before(:each) do
           matcher.stub(:respond_to?).with(:matches?).and_return(true)
         end
 
-        before (:each) do
+        before(:each) do
           @result = ArgMatchFactory.create_arg_matcher_using([matcher])
         end
 

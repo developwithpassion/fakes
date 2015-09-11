@@ -9,17 +9,17 @@ module Fakes
       let(:matchers) { [first_matcher, second_matcher] }
       let(:options) { { matchers: matchers } }
       let(:sut) { CombinedArgMatcher.new(options) }
-      before (:each) do
+      before(:each) do
         first_matcher.stub(:matches?).with(2).and_return(3)
         second_matcher.stub(:matches?).with(3).and_return(3)
       end
 
-      before (:each) do
+      before(:each) do
         @result = sut.matches?(args)
       end
 
       it 'should match if each of its argument matchers matches its respective argument' do
-        expect(@result).to be_true
+        expect(@result).to be true
       end
     end
     context 'when adding a matcher' do
@@ -28,7 +28,7 @@ module Fakes
       let(:options) { { matchers: matchers } }
       let(:sut) { CombinedArgMatcher.new(options) }
 
-      before (:each) do
+      before(:each) do
         sut.add(first_matcher)
       end
 

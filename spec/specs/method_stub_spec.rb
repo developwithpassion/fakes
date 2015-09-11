@@ -9,10 +9,10 @@ module Fakes
       let(:arg_sets) { [] }
       let(:sut) { MethodStub.new(arg_sets) }
 
-      before (:each) do
+      before(:each) do
         ArgSet.stub(:new).with([args]).and_return(argument_set)
       end
-      before (:each) do
+      before(:each) do
         @result = sut.with(args)
       end
       it 'should add a new argument set to its list of arguments' do
@@ -28,10 +28,10 @@ module Fakes
       let(:arg_sets) { [] }
       let(:sut) { MethodStub.new(arg_sets) }
 
-      before (:each) do
+      before(:each) do
         IgnoreSet.stub(:new).and_return(ignored_set)
       end
-      before (:each) do
+      before(:each) do
         @result = sut.ignore_arg
       end
       it 'should add the ignored set to the list of argument sets' do
@@ -56,11 +56,11 @@ module Fakes
         end
       end
 
-      before (:each) do
+      before(:each) do
         IgnoreSet.stub(:new).and_return(ignored_set)
       end
 
-      before (:each) do
+      before(:each) do
         sut.throws(exception)
       end
       it 'should add the ignored set to the set of args sets' do
@@ -83,12 +83,12 @@ module Fakes
       context 'and it has the specified argument set' do
         let(:arguments) { [1] }
         let(:arg_set) { DummyArgSet.new }
-        before (:each) do
+        before(:each) do
           arg_sets.push(arg_set)
           arg_set.stub(:matches?).and_return(true)
           arg_set.stub(:process).and_return(2)
         end
-        before (:each) do
+        before(:each) do
           @result = sut.invoke(arguments)
         end
         it 'should tell the argument set to capture the arguments it was called with' do
@@ -101,11 +101,11 @@ module Fakes
       context 'and it does not have the specified argument set' do
         let(:arguments) { [1] }
         let(:arg_set) { DummyArgSet.new }
-        before (:each) do
+        before(:each) do
           sut.stub(:ignore_arg).and_return(arg_set)
           arg_set.stub(:process).and_return(2)
         end
-        before (:each) do
+        before(:each) do
           @result = sut.invoke(arguments)
         end
         it 'should tell the argument set to capture the arguments it was called with' do
@@ -131,11 +131,11 @@ module Fakes
 
       context 'and one of its argument sets was called with the set of arguments' do
         let(:arg_set) { DummyArgSet.new }
-        before (:each) do
+        before(:each) do
           arg_sets.push(arg_set)
           arg_set.stub(:was_called_with?).with([arguments]).and_return(true)
         end
-        before (:each) do
+        before(:each) do
           @result = sut.called_with(arguments)
         end
 
@@ -144,7 +144,7 @@ module Fakes
         end
       end
       context 'and none of its argument sets were called with the arguments' do
-        before (:each) do
+        before(:each) do
           @result = sut.called_with(arguments)
         end
         it 'should return nil' do
@@ -159,7 +159,7 @@ module Fakes
       let(:arg_set) { DummyArgSet.new }
       let(:arg_set_2) { DummyArgSet.new }
 
-      before (:each) do
+      before(:each) do
         arg_sets.push(arg_set)
         arg_sets.push(arg_set_2)
         arg_set.stub(:times_called).and_return(2)
@@ -176,7 +176,7 @@ module Fakes
       let(:arg_set) { DummyArgSet.new }
       let(:arg_set_2) { DummyArgSet.new }
 
-      before (:each) do
+      before(:each) do
         arg_sets.push(arg_set)
         arg_sets.push(arg_set_2)
         arg_set.stub(:times_called).and_return(2)
@@ -184,7 +184,7 @@ module Fakes
       end
 
       it 'it should return whether the sum of its argset invocations is the same as the number of request made' do
-        expect(sut.times?(5)).to be_true
+        expect(sut.times?(5)).to be true
         expect(sut.times?(3)).to be_falsey
       end
     end
