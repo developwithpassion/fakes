@@ -1,6 +1,5 @@
 module Fakes
   class BlockArgMatcher
-
     def initialize(specification_block)
       @specification_block = specification_block
     end
@@ -8,6 +7,5 @@ module Fakes
     def matches?(item)
       @specification_block.call(item)
     end
-  
   end
 end

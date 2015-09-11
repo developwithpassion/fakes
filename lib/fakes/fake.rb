@@ -4,30 +4,30 @@ module Fakes
       @method_invocations = invocation_set
     end
 
-    def method_missing(name,*args,&block)
-      return @method_invocations.has_key?(name.to_sym) ? @method_invocations[name.to_sym].invoke(args) : handle_unexpected_method_invocation(name,args,block)
+    def method_missing(name, *args, &block)
+      @method_invocations.key?(name.to_sym) ? @method_invocations[name.to_sym].invoke(args) : handle_unexpected_method_invocation(name, args, block)
     end
 
-    def send(name,*args,&block)
-      return method_missing(name,*args,&block)
+    def send(name, *args, &block)
+      method_missing(name, *args, &block)
     end
 
-    def handle_unexpected_method_invocation(name,args,block)
+    def handle_unexpected_method_invocation(name, args, _block)
       method = stub(name.to_sym)
       method.ignore_arg
-      return method.invoke(args)
+      method.invoke(args)
     end
 
     def stub(symbol)
-      return @method_invocations[symbol] || @method_invocations[symbol] = MethodStub.new
+      @method_invocations[symbol] || @method_invocations[symbol] = MethodStub.new
     end
 
     def received(symbol)
-      return @method_invocations[symbol]
+      @method_invocations[symbol]
     end
 
     def never_received?(symbol, *args)
-      return !received?(symbol, *args)
+      !received?(symbol, *args)
     end
 
     def received?(symbol, *args)
@@ -35,7 +35,7 @@ module Fakes
       return false if method.nil?
 
       argument_set = method.called_with(*args)
-      return !argument_set.nil?
+      !argument_set.nil?
     end
   end
 end

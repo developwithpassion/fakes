@@ -1,6 +1,5 @@
 module Fakes
   class RegularArgMatcher
-
     def initialize(value_to_match)
       @value_to_match = value_to_match
     end

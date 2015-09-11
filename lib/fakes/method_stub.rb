@@ -10,7 +10,7 @@ module Fakes
     end
 
     def with(*args)
-      return add_new_argument_set(ArgSet.new(args))
+      add_new_argument_set(ArgSet.new(args))
     end
 
     def throws(exception)
@@ -22,7 +22,7 @@ module Fakes
     end
 
     def ignore_arg
-      return add_new_argument_set(IgnoreSet.new)
+      add_new_argument_set(IgnoreSet.new)
     end
 
     def and_return(item)
@@ -30,21 +30,21 @@ module Fakes
     end
 
     def invoke(args)
-      set = @arg_sets.find{|item| item.matches?(args)} || ignore_arg
+      set = @arg_sets.find { |item| item.matches?(args) } || ignore_arg
       set.capture_args(args)
-      return set.process
+      set.process
     end
 
     def called_with(*args)
-      return @arg_sets.find{|item| item.was_called_with?(args)}
+      @arg_sets.find { |item| item.was_called_with?(args) }
     end
 
     def total_times_called
-      return @arg_sets.inject(0){|sum,item|sum += item.times_called}
+      @arg_sets.inject(0) { |sum, item| sum + item.times_called }
     end
 
     def times?(value)
-      return total_times_called == value
+      total_times_called == value
     end
   end
 end
