@@ -1,6 +1,5 @@
 module Fakes
   module ArgumentMatching
-    extend self
 
     def not_nil
       condition { |item| !item.nil? }
@@ -29,5 +28,13 @@ module Fakes
     def condition(&conditional_block)
       BlockArgMatcher.new(conditional_block)
     end
+
+    module_function :not_nil
+    module_function :nil
+    module_function :any
+    module_function :greater_than
+    module_function :in_range
+    module_function :regex
+    module_function :condition
   end
 end
