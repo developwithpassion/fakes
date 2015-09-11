@@ -1,17 +1,17 @@
 module Fakes
   def fake(invocations = {})
     item = Fake.new
-    invocations.each{|method,return_value| item.stub(method).and_return(return_value)}
+    invocations.each { |method, return_value| item.stub(method).and_return(return_value) }
     item
   end
 
   def arg_match
-    return ArgumentMatching
+    ArgumentMatching
   end
 
-  def fake_class(klass,invocations = {})
+  def fake_class(klass, invocations = {})
     item = fake(invocations)
-    ClassSwaps.instance.add_fake_for(klass,item)
+    ClassSwaps.instance.add_fake_for(klass, item)
     item
   end
 
@@ -19,4 +19,3 @@ module Fakes
     ClassSwaps.instance.reset
   end
 end
-

@@ -3,7 +3,7 @@ module Fakes
     attr_reader :all_matchers
 
     def initialize(options = {})
-      @all_matchers = options.fetch(:matchers,[])
+      @all_matchers = options.fetch(:matchers, [])
     end
 
     def matches?(args)
@@ -21,7 +21,6 @@ module Fakes
     def add(matcher)
       all_matchers << matcher
     end
-    alias :<< :add
-    
+    alias_method :<<, :add
   end
 end

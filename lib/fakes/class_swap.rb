@@ -1,9 +1,9 @@
 module Fakes
   class ClassSwap
-    attr_accessor :original,:replacement
+    attr_accessor :original, :replacement
     attr_reader :klass
 
-    def initialize(fully_qualified_klass,replacement,options ={})
+    def initialize(fully_qualified_klass, replacement, options = {})
       modules = get_modules(fully_qualified_klass)
       @klass = modules.keys.last.to_sym
 
@@ -12,18 +12,17 @@ module Fakes
 
       @replacement = replacement
 
-      @remove_strategy = options.fetch(:remove_strategy, Proc.new do |klass| 
+      @remove_strategy = options.fetch(:remove_strategy, proc do |klass|
         class_root.send(:remove_const, klass)
       end)
 
-      @set_strategy = options.fetch(:set_strategy, Proc.new do |klass, new_value|
+      @set_strategy = options.fetch(:set_strategy, proc do |klass, new_value|
         class_root.const_set(klass.to_sym, new_value)
       end)
-
     end
-    
+
     def get_modules(fully_qualified_klass)
-      klass_parts = fully_qualified_klass.to_s.split("::")
+      klass_parts = fully_qualified_klass.to_s.split('::')
       root = Object
       modules = {}
       modules[:Object] = root
@@ -38,17 +37,17 @@ module Fakes
     end
 
     def initiate
-      swap_to(replacement){|original| @original = original}
+      swap_to(replacement) { |original| @original = original }
     end
 
     def reset
       swap_to(@original)
     end
 
-    def swap_to(new_value,&block)
+    def swap_to(new_value, &_block)
       current = @remove_strategy.call(@klass)
       yield current if block_given?
-      @set_strategy.call(@klass,new_value)
+      @set_strategy.call(@klass, new_value)
     end
   end
 end

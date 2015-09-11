@@ -3,11 +3,11 @@ module Fakes
     extend self
 
     def not_nil
-      condition { |item| item != nil }
+      condition { |item| !item.nil? }
     end
 
     def nil
-      condition { |item| item == nil }
+      condition(&:nil?)
     end
 
     def any
@@ -18,7 +18,6 @@ module Fakes
       condition { |number| number > value }
     end
 
-
     def in_range(range)
       condition { |item| range === item }
     end
@@ -28,7 +27,7 @@ module Fakes
     end
 
     def condition(&conditional_block)
-      return BlockArgMatcher.new(conditional_block)
+      BlockArgMatcher.new(conditional_block)
     end
   end
 end

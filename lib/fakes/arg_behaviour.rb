@@ -1,6 +1,6 @@
 module Fakes
   module ArgBehaviour
-    attr_accessor :return_value,:times_called,:arg_matcher
+    attr_accessor :return_value, :times_called, :arg_matcher
     attr_reader :callback_block
 
     def initialize_matcher_using(args)
@@ -26,7 +26,7 @@ module Fakes
     end
 
     def matches?(args)
-      return @arg_matcher.matches?(args)
+      @arg_matcher.matches?(args)
     end
 
     def was_called_with?(args)
@@ -38,7 +38,7 @@ module Fakes
         @arguments_provided ? callback_block.call(*@called_args) : callback_block.call
       else
         raise @exception if @exception
-        @return_value 
+        @return_value
       end
     end
   end
